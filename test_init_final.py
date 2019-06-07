@@ -1056,7 +1056,7 @@ async def on_message(msg):
 
 		##################################
 
-		if message.content.startswith('보스탐'):
+		if message.content.startswith('보스탐') or message.content.startswith('!보스탐'):
 			for i in range(bossNum):
 				for j in range(bossNum):
 					if bossTimeString[i] and bossTimeString[j] != '99:99:99':
