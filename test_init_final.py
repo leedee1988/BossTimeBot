@@ -802,17 +802,17 @@ async def on_message(msg):
 
 		##################################
 
-		if message.content.startswith('!사다리'):
-			ladder = []
-			ladder = message.content[5:].split(" ")
-			num_cong = int(ladder[0])
-			del(ladder[0])
-			if num_cong <= len(ladder):
-				result_ladder = random.sample(ladder, num_cong)
-				print (result_ladder)
-				await client.send_message(client.get_channel(channel), '----- 당첨! -----\n' + str(result_ladder), tts=False)
-			else:
-				await client.send_message(client.get_channel(channel), '추첨인원이 총 인원보다 많습니다. 재입력 해주세요', tts=False)
+#		if message.content.startswith('!사다리'):
+#			ladder = []
+#			ladder = message.content[5:].split(" ")
+#			num_cong = int(ladder[0])
+#			del(ladder[0])
+#			if num_cong <= len(ladder):
+#				result_ladder = random.sample(ladder, num_cong)
+#				print (result_ladder)
+#				await client.send_message(client.get_channel(channel), '----- 당첨! -----\n' + str(result_ladder), tts=False)
+#			else:
+#				await client.send_message(client.get_channel(channel), '추첨인원이 총 인원보다 많습니다. 재입력 해주세요', tts=False)
 
 		if message.content.startswith('/뽑기'):
 			ladder = []
@@ -830,7 +830,7 @@ async def on_message(msg):
 		if message.content.startswith('!메뉴') or message.content.startswith('/메뉴') or message.content.startswith('/도움말'):
 			embed = discord.Embed(
 					title = "----- 메뉴 -----",
-					description= '!채널확인\n!채널이동 [채널명]\n!소환 or /소환\n!불러오기\n!초기화 or /보탐 초기화\n!명치 or /정신차려\n!미예약\n!분배 [인원] [금액]\n!사다리 [뽑을인원수] [아이디1] [아이디2] ...\n!보스일괄 00:00 또는 !보스일괄 0000\n!ㅂ,ㅃ,q\n\n[보스명] 컷\n[보스명] 컷 00:00 또는 [보스명] 컷 0000\n[보스명] 멍\n[보스명] 멍 00:00 또는 [보스명] 멍 0000\n[보스명] 예상 00:00 또는 [보스명] 예상 0000\n[보스명] 삭제\n/보스or/보탐',
+					description= '!채널확인\n!채널이동 [채널명]\n!소환 or /소환\n!불러오기\n!초기화 or /보탐 초기화\n!명치 or /정신차려\n!미예약\n!분배 [인원] [금액]\n/뽑기[뽑을인원수] [아이디1] [아이디2] ...\n!보스일괄 00:00 또는 !보스일괄 0000\n!ㅂ,ㅃ,q\n\n[보스명] 컷\n[보스명] 컷 00:00 또는 [보스명] 컷 0000\n[보스명] 멍\n[보스명] 멍 00:00 또는 [보스명] 멍 0000\n[보스명] 예상 00:00 또는 [보스명] 예상 0000\n[보스명] 삭제\n/보스or/보탐',
 					color=0xff00ff
 					)
 			await client.send_message(client.get_channel(channel), embed=embed, tts=False)
