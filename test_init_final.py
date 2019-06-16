@@ -616,8 +616,8 @@ async def on_message(msg):
 		##################################
 
 		for i in range(bossNum):
-			if message.content.startswith(bossData[i][0] +'컷'):
-				tmp_msg = bossData[i][0] +'컷'
+			if message.content.startswith(bossData[i][0] +' 컷'):
+				tmp_msg = bossData[i][0] +' 컷'
 				if len(hello) > len(tmp_msg) + 3 :
 					if hello.find(':') != -1 :
 						chkpos = hello.find(':')
@@ -670,8 +670,8 @@ async def on_message(msg):
 
 		##################################
 
-			if message.content.startswith(bossData[i][0] +'멍'):
-				tmp_msg = bossData[i][0] +'멍'
+			if message.content.startswith(bossData[i][0] +' 멍'):
+				tmp_msg = bossData[i][0] +' 멍'
 				tmp_now = datetime.datetime.now() + datetime.timedelta(hours = int(basicSetting[0]))
 				if tmp_bossTime[i] != bossTime[i]:
 					bossMungCnt[i] = bossMungCnt[i] + 1
@@ -721,8 +721,8 @@ async def on_message(msg):
 		##################################
 
 		for i in range(bossNum):
-			if message.content.startswith(bossData[i][0] +'예상'):
-				tmp_msg = bossData[i][0] +'예상'
+			if message.content.startswith(bossData[i][0] +' 예상'):
+				tmp_msg = bossData[i][0] +' 예상'
 				if len(hello) > len(tmp_msg) + 3 :
 					if hello.find(':') != -1 :
 						chkpos = hello.find(':')
@@ -761,7 +761,7 @@ async def on_message(msg):
 					
 		##################################
 				
-			if message.content.startswith(bossData[i][0] +'삭제'):
+			if message.content.startswith(bossData[i][0] +' 삭제'):
 				bossTime[i] = datetime.datetime.now()+datetime.timedelta(days=365, hours = int(basicSetting[0]))
 				tmp_bossTime[i] =  datetime.datetime.now()+datetime.timedelta(days=365, hours = int(basicSetting[0]))
 				bossTimeString[i] = '99:99:99'
@@ -830,7 +830,7 @@ async def on_message(msg):
 		if message.content.startswith('!메뉴') or message.content.startswith('/메뉴') or message.content.startswith('/도움말'):
 			embed = discord.Embed(
 					title = "----- 메뉴 -----",
-					description= '!채널확인\n!채널이동 [채널명]\n!소환 or /소환\n!불러오기\n!초기화 or /보탐 초기화\n!명치 or /정신차려\n!미예약\n!분배 [인원] [금액]\n!사다리 [뽑을인원수] [아이디1] [아이디2] ...\n!보스일괄 00:00 또는 !보스일괄 0000\n!ㅂ,ㅃ,q\n\n[보스명]컷\n[보스명]컷 00:00 또는 [보스명]컷 0000\n[보스명]멍\n[보스명]멍 00:00 또는 [보스명]멍 0000\n[보스명]예상 00:00 또는 [보스명]예상 0000\n[보스명]삭제\n/보스or/보탐',
+					description= '!채널확인\n!채널이동 [채널명]\n!소환 or /소환\n!불러오기\n!초기화 or /보탐 초기화\n!명치 or /정신차려\n!미예약\n!분배 [인원] [금액]\n!사다리 [뽑을인원수] [아이디1] [아이디2] ...\n!보스일괄 00:00 또는 !보스일괄 0000\n!ㅂ,ㅃ,q\n\n[보스명] 컷\n[보스명] 컷 00:00 또는 [보스명] 컷 0000\n[보스명] 멍\n[보스명] 멍 00:00 또는 [보스명] 멍 0000\n[보스명] 예상 00:00 또는 [보스명] 예상 0000\n[보스명] 삭제\n/보스or/보탐',
 					color=0xff00ff
 					)
 			await client.send_message(client.get_channel(channel), embed=embed, tts=False)
