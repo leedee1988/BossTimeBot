@@ -1115,12 +1115,12 @@ async def on_message(msg):
 									information += ' - ' + bossData[i][0] + '(' + bossData[i][1] + '.' + bossData[i][5] + ') : ' + bossTimeString[i] + ' (멍 ' + str(bossMungCnt[i]) + '회)' + '\n'
 
 			embed = discord.Embed(
-					title = "---- 보스탐 정보 ----",
+					title = "----- 보스탐 정보 -----",
 					description= information,
 					color=0x0000ff
 					)
 			embed.add_field(
-					name="---- 미예약보스 ----",
+					name="----- 미예약보스 -----",
 					value=str(temp_bossTime1)
 					)
 			await client.send_message(client.get_channel(channel), embed=embed, tts=False)
