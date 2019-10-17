@@ -568,7 +568,6 @@ async def JointheVC(VCchannel, TXchannel):
 
 	if VCchannel is not None:
 		if chkvoicechannel == 0:
-            await TXchannel.send('chkvoicechannel == 0', tts=False)
 			voice_client1 = await VCchannel.connect(reconnect=True)
 			if voice_client1.is_connected():
 				await voice_client1.disconnect()
@@ -576,7 +575,6 @@ async def JointheVC(VCchannel, TXchannel):
 			chkvoicechannel = 1
 			await PlaySound(voice_client1, './sound/hello.mp3')
 		else :
-            await TXchannel.send('chkvoicechannel != 0', tts=False)
 			await voice_client1.disconnect()
 			voice_client1 = await VCchannel.connect(reconnect=True)
 			await PlaySound(voice_client1, './sound/hello.mp3')
@@ -748,10 +746,13 @@ while True:
 				repo.update_file(contents.path, "test_setting", result_textCH, contents.sha)
 
 			await client.get_channel(channel).send('< 텍스트채널 [' + client.get_channel(channel).name + '] 접속완료>', tts=False)
+            chflg = 1
 				
 			if basicSetting[6] != "":
 				#print ('join channel')
+                await client.get_channel(channel).send('JointheVC start', tts=False)
 				await JointheVC(client.get_channel(basicSetting[6]), channel)
+                await client.get_channel(channel).send('JointheVC end', tts=False)
 				await client.get_channel(channel).send('< 음성채널 [' + client.get_channel(basicSetting[6]).name + '] 접속완료>', tts=False)
 
 			await client.get_channel(channel).send('< 보탐봇 재시작 설정시간 ' + basicSetting[4] + '시 ' + basicSetting[5] + '분입니다. >', tts=False)
