@@ -568,6 +568,7 @@ async def JointheVC(VCchannel, TXchannel):
 
 	if VCchannel is not None:
 		if chkvoicechannel == 0:
+            await TXchannel.send('chkvoicechannel == 0', tts=False)
 			voice_client1 = await VCchannel.connect(reconnect=True)
 			if voice_client1.is_connected():
 				await voice_client1.disconnect()
@@ -575,6 +576,7 @@ async def JointheVC(VCchannel, TXchannel):
 			chkvoicechannel = 1
 			await PlaySound(voice_client1, './sound/hello.mp3')
 		else :
+            await TXchannel.send('chkvoicechannel != 0', tts=False)
 			await voice_client1.disconnect()
 			voice_client1 = await VCchannel.connect(reconnect=True)
 			await PlaySound(voice_client1, './sound/hello.mp3')
