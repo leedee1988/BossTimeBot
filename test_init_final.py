@@ -748,7 +748,6 @@ while True:
 				repo.update_file(contents.path, "test_setting", result_textCH, contents.sha)
 
 			await client.get_channel(channel).send('< 텍스트채널 [' + client.get_channel(channel).name + '] 접속완료>', tts=False)
-            chflg = 1
 				
 			if basicSetting[6] != "":
 				#print ('join channel')
