@@ -563,9 +563,11 @@ async def dbLoad():
 
 #음성채널 입장
 async def JointheVC(VCchannel, TXchannel):
+    await client.get_channel(channel).send('JointheVC function start', tts=False)
 	global chkvoicechannel
 	global voice_client1
 
+    await client.get_channel(channel).send('JointheVC function if start', tts=False)
 	if VCchannel is not None:
 		if chkvoicechannel == 0:
             await TXchannel.send('chkvoicechannel == 0', tts=False)
@@ -582,6 +584,7 @@ async def JointheVC(VCchannel, TXchannel):
 			await PlaySound(voice_client1, './sound/hello.mp3')
 	else:
 		await TXchannel.send('음성채널에 먼저 들어가주세요.', tts=False)
+    await client.get_channel(channel).send('JointheVC function if end', tts=False)
 
 #사다리함수
 async def LadderFunc(number, ladderlist, channelVal):
@@ -751,7 +754,9 @@ while True:
 				
 			if basicSetting[6] != "":
 				#print ('join channel')
+                await client.get_channel(channel).send('JointheVC start', tts=False)
 				await JointheVC(client.get_channel(basicSetting[6]), channel)
+                await client.get_channel(channel).send('JointheVC end', tts=False)
 				await client.get_channel(channel).send('< 음성채널 [' + client.get_channel(basicSetting[6]).name + '] 접속완료>', tts=False)
 
 			await client.get_channel(channel).send('< 보탐봇 재시작 설정시간 ' + basicSetting[4] + '시 ' + basicSetting[5] + '분입니다. >', tts=False)
