@@ -749,9 +749,8 @@ while True:
 				
 			if basicSetting[6] != "":
 				#print ('join channel')
-                await client.get_channel(channel).send('1', tts=False)
+                await client.get_channel(channel).send('aa', tts=False)
 				await JointheVC(client.get_channel(basicSetting[6]), channel)
-                await client.get_channel(channel).send('2', tts=False)
 				await client.get_channel(channel).send('< 음성채널 [' + client.get_channel(basicSetting[6]).name + '] 접속완료>', tts=False)
 
 			await client.get_channel(channel).send('< 보탐봇 재시작 설정시간 ' + basicSetting[4] + '시 ' + basicSetting[5] + '분입니다. >', tts=False)
