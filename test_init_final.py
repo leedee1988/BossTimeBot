@@ -586,6 +586,23 @@ async def LadderFunc(number, ladderlist, channelVal):
 		await channelVal.send(embed=embed, tts=False)
 	else:
 		await channelVal.send('```추첨인원이 총 인원과 같거나 많습니다. 재입력 해주세요```', tts=False)
+		
+#초성추출 함수
+def convertToInitialLetters(text):
+    CHOSUNG_START_LETTER = 4352
+    JAMO_START_LETTER = 44032
+    JAMO_END_LETTER = 55203
+    JAMO_CYCLE = 588
+    
+    def isHangul(ch):
+        return ord(ch) >= JAMO_START_LETTER and ord(ch) <= JAMO_END_LETTER
+    
+    result = ""
+    for ch in text:
+        if isHangul(ch): #한글이 아닌 글자는 걸러냅니다.
+            result += chr((int((ord(ch)-JAMO_START_LETTER)/JAMO_CYCLE))+CHOSUNG_START_LETTER)
+        
+    return result
 
 ## 명치 예외처리	
 def handle_exit():
@@ -828,7 +845,7 @@ while True:
 			##################################
 
 			for i in range(bossNum):
-				if message.content.startswith(bossData[i][0] +'컷'):
+				if message.content.startswith(bossData[i][0] +'컷') or convertToInitialLetters(message.content).startswith(convertToInitialLetters(bossData[i][0] +'컷')):
 					if hello.find('  ') != -1 :
 						bossData[i][6] = hello[hello.find('  ')+2:]
 						hello = hello[:hello.find('  ')]
