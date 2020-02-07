@@ -596,11 +596,35 @@ def convertToInitialLetters(text):
     
     def isHangul(ch):
         return ord(ch) >= JAMO_START_LETTER and ord(ch) <= JAMO_END_LETTER
+
+    def convertNomalInitialLetter(ch):
+        dic_InitalLetter = {4352:"ㄱ"
+                            ,4353:"ㄲ"
+                            ,4354:"ㄴ"
+                            ,4355:"ㄷ"
+                            ,4356:"ㄸ"
+                            ,4357:"ㄹ"
+                            ,4358:"ㅁ"
+                            ,4359:"ㅂ"
+                            ,4360:"ㅃ"
+                            ,4361:"ㅅ"
+                            ,4362:"ㅆ"
+                            ,4363:"ㅇ"
+                            ,4364:"ㅈ"
+                            ,4365:"ㅉ"
+                            ,4366:"ㅊ"
+                            ,4367:"ㅋ"
+                            ,4368:"ㅌ"
+                            ,4369:"ㅍ"
+                            ,4370:"ㅎ"
+        }
+        
+        return dic_InitalLetter[ord(ch)]
     
     result = ""
     for ch in text:
         if isHangul(ch): #한글이 아닌 글자는 걸러냅니다.
-            result += chr((int((ord(ch)-JAMO_START_LETTER)/JAMO_CYCLE))+CHOSUNG_START_LETTER)
+            result += convertNomalInitialLetter(chr((int((ord(ch)-JAMO_START_LETTER)/JAMO_CYCLE))+CHOSUNG_START_LETTER))
         
     return result
 
@@ -845,7 +869,7 @@ while True:
 			##################################
 
 			for i in range(bossNum):
-				if message.content.startswith(bossData[i][0] +'컷') or convertToInitialLetters(message.content).startswith(convertToInitialLetters(bossData[i][0] +'컷')):
+				if message.content.startswith(bossData[i][0] +'컷') or message.content.startswith(convertToInitialLetters(bossData[i][0] +'컷')):
 					if hello.find('  ') != -1 :
 						bossData[i][6] = hello[hello.find('  ')+2:]
 						hello = hello[:hello.find('  ')]
