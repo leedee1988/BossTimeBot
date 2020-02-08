@@ -1368,7 +1368,7 @@ while True:
 
 			################ 보스타임 출력 ################ 
 
-			if message.content == '보스탐' or message.content == '/1' or message.content == '/보스':
+			if message.content == '보스탐' or message.content == '/1' or message.content == '/보스' or message.content == 'ㅄㅌ'  or message.content == 'ㅂ':
 				
 				datelist = []
 				datelist2 = []
