@@ -1100,7 +1100,7 @@ while True:
 			if message.content == '!메뉴' :
 				embed = discord.Embed(
 						title = "----- 메뉴 -----",
-						description= '```!현재시간\n!채널확인\n!채널이동 [채널명]\n!소환\n!불러오기\n!초기화\n!재시작\n!명치\n!미예약\n!분배 [인원] [금액]\n!사다리 [뽑을인원수] [아이디1] [아이디2] ...\n!보스일괄 00:00 또는 !보스일괄 0000\n!ㅂ,ㅃ,q\n\n[보스명]컷\n[보스명]컷 00:00 또는 [보스명]컷 0000\n[보스명]멍\n[보스명]멍 00:00 또는 [보스명]멍 0000\n[보스명]예상 00:00 또는 [보스명]예상 0000\n[보스명]삭제\n보스탐\n!보스탐\n!리젠```',
+						description= '```!현재시간\n!채널확인\n!채널이동 [채널명]\n!소환\n!불러오기\n!초기화\n!재시작\n!명치\n!미예약\n!분배 [인원] [금액]\n!사다리 [뽑을인원수] [아이디1] [아이디2] ...\n!보스일괄 00:00 또는 !보스일괄 0000\n!ㅂ,ㅃ,q\n\n[보스명]컷\n[보스명]컷 00:00 또는 [보스명]컷 0000\n[보스명]멍\n[보스명]멍 00:00 또는 [보스명]멍 0000\n[보스명]예상 00:00 또는 [보스명]예상 0000\n[보스명]삭제\n보스탐\n!보스탐\n!리젠\n!공지\n!페이백 [거래소등록가격] [실제거래가격]```',
 						color=0xff00ff
 						)
 				embed.add_field(
@@ -1627,6 +1627,32 @@ while True:
 				contents = repo.get_contents("notice.ini")
 				repo.update_file(contents.path, "notice 삭제", '', contents.sha)
 				await client.get_channel(channel).send( '< 공지 삭제완료 >', tts=False)
+
+			################ 페이백 계산 ################ 
+
+			if message.content.startswith('!페이백'):
+				arrPayBack = []
+				arrPayBack = message.content.split(" ")
+				Tax = 5
+
+				if len(arrPayBack) == 4:
+					if arrPayBack[3].isdigit():
+						Tax = int(arrPayBack[3])
+
+				if len(arrPayBack) == 3:
+					if arrPayBack[1].isdigit() and arrPayBack[2].isdigit():
+						price_Reg = int(arrPayBack[1])
+						price_Real = int(arrPayBack[2])
+
+						price_Reg_Tax = int(price_Reg * ((100 - Tax) / 100))
+						price_Real_Tax = int(price_Real * ((100 - Tax) / 100))
+
+						embed = discord.Embed(
+						title='----- 페이백 계산 결과 -----',
+						description= "거래소 등록가 : " + str(price_Reg) + ", 거래소 정산가 : " + str(price_Reg_Tax) + "\n" + "실거래 등록가 : " + str(price_Real) + ", 실거래 정산가 : " + str(price_Real_Tax) + "\n" + "페이백 : " + str(price_Reg_Tax - price_Real_Tax),
+						color=0x0000ff
+						)
+						await msg.channel.send(embed=embed, tts=False)
 
 	client.loop.create_task(task())
 	try:
