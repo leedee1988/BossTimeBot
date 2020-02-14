@@ -1598,6 +1598,36 @@ while True:
 				#client.clear()
 				raise SystemExit
 
+			################ 공지확인, 입력 및 삭제 ################ 
+
+			if message.content == "!공지":
+				notice_initdata = repo.get_contents("notice.ini")
+				notice = base64.b64decode(notice_initdata.content)
+				notice = notice.decode('utf-8')
+				if notice != '' :
+					embed = discord.Embed(
+							description= str(notice),
+							color=0xff00ff
+							)
+				else :
+					embed = discord.Embed(
+							description= '등록된 공지가 없습니다.',
+							color=0xff00ff
+							)
+				await msg.channel.send(embed=embed, tts=False)
+
+			if message.content.startswith("!공지" + ' '):
+				tmp_sayMessage = message.content
+				sayMessage = tmp_sayMessage[len("!공지")+1:]
+				contents = repo.get_contents("notice.ini")
+				repo.update_file(contents.path, "notice 등록", sayMessage, contents.sha)
+				await client.get_channel(channel).send( '< 공지 등록완료 >', tts=False)
+			
+			if message.content == "!공지" + '삭제':
+				contents = repo.get_contents("notice.ini")
+				repo.update_file(contents.path, "notice 삭제", '', contents.sha)
+				await client.get_channel(channel).send( '< 공지 삭제완료 >', tts=False)
+
 	client.loop.create_task(task())
 	try:
 		client.loop.run_until_complete(client.start(access_token))
