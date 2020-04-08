@@ -1668,7 +1668,7 @@ while True:
 				#racing_unit = [':giraffe:', ':elephant:', ':tiger2:', ':hippopotamus:', ':crocodile:',':leopard:',':ox:', ':sheep:', ':pig2:',':dromedary_camel:',':dragon:',':rabbit2:'] #동물스킨
 				racing_unit = [':red_car:', ':taxi:', ':bus:', ':trolleybus:', ':race_car:', ':police_car:', ':ambulance:', ':fire_engine:', ':minibus:', ':truck:', ':articulated_lorry:', ':tractor:', ':scooter:', ':manual_wheelchair:', ':motor_scooter:', ':auto_rickshaw:', ':blue_car:', ':bike:', ':helicopter:', ':steam_locomotive:']  #탈것스킨
 				random.shuffle(racing_unit) 
-				racing_member = message.content.split(" ")
+				racing_member = message.content[4:].split(" ")
 
 				if len(racing_member) == 1:
 					await msg.channel.send('레이스 인원이 1명 입니다.')
