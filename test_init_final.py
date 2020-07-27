@@ -2120,6 +2120,10 @@ while True:
 		else:
 			return
 
+	################ 보스타임 출력 ################ 
+	@client.command(name="ㅄㅌ", aliases=command[22][1:])
+	await bossTime_(ctx)
+
 	################ 보스타임 출력(고정보스포함) ################ 
 	@client.command(name=command[23][0], aliases=command[23][1:])
 	async def bossTime_fixed_(ctx):
