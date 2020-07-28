@@ -10,8 +10,8 @@ import datetime
 import random
 import math
 import logging
-from discord.ext import commands
-from discord.ext.commands import CommandNotFound
+from discord.ext import tasks, commands
+from discord.ext.commands import CommandNotFound, MissingRequiredArgument
 from gtts import gTTS
 from github import Github
 import base64
@@ -21,6 +21,9 @@ from oauth2client.service_account import ServiceAccountCredentials #정산
 from io import StringIO
 import urllib.request
 from math import ceil, floor
+import aiohttp
+from pymongo import MongoClient
+import pymongo, ssl, traceback, random
 
 ##################### 로깅 ###########################
 log_stream = StringIO()    
@@ -78,6 +81,10 @@ access_token = os.environ["BOT_TOKEN"]
 git_access_token = os.environ["GIT_TOKEN"]			
 git_access_repo = os.environ["GIT_REPO"]			
 git_access_repo_restart = os.environ["GIT_REPO_RESTART"]			
+mongoDB_HOST = os.environ["MONGODB_HOST"]
+user_ID = os.environ["USER_ID"]
+user_PASSWORD = os.environ["USER_PW"]
+time_Zone = os.environ["TIME_ZONE"]
 
 g = Github(git_access_token)
 repo = g.get_repo(git_access_repo)
