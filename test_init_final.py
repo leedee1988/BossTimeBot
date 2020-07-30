@@ -4641,14 +4641,6 @@ async def on_ready():
 	# 이 기능을 사용하여 봇의 상태를 간단하게 출력해줄 수 있습니다.
 	await client.change_presence(status=discord.Status.dnd, activity=discord.Game(name=command[1][0], type=1), afk=False)
 
-ilsang_distribution_bot : IlsangDistributionBot = IlsangDistributionBot()
-ilsang_distribution_bot.add_cog(settingCog(ilsang_distribution_bot))
-ilsang_distribution_bot.add_cog(adminCog(ilsang_distribution_bot))
-ilsang_distribution_bot.add_cog(memberCog(ilsang_distribution_bot))
-ilsang_distribution_bot.add_cog(manageCog(ilsang_distribution_bot))
-ilsang_distribution_bot.add_cog(bankCog(ilsang_distribution_bot))
-ilsang_distribution_bot.run()
-
 while True:
 	################ 보탐봇 입장 ################ 	
 	@commands.has_permissions(manage_messages=True)
@@ -7029,3 +7021,12 @@ while True:
 	print("Bot restarting")
 	client = discord.Client(loop=client.loop)
 	client = commands.Bot(command_prefix="", help_command = None, description='일상디코봇')
+
+
+ilsang_distribution_bot : IlsangDistributionBot = IlsangDistributionBot()
+ilsang_distribution_bot.add_cog(settingCog(ilsang_distribution_bot))
+ilsang_distribution_bot.add_cog(adminCog(ilsang_distribution_bot))
+ilsang_distribution_bot.add_cog(memberCog(ilsang_distribution_bot))
+ilsang_distribution_bot.add_cog(manageCog(ilsang_distribution_bot))
+ilsang_distribution_bot.add_cog(bankCog(ilsang_distribution_bot))
+ilsang_distribution_bot.run()
