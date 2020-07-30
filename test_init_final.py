@@ -10,8 +10,8 @@ import datetime
 import random
 import math
 import logging
-from discord.ext import commands
-from discord.ext.commands import CommandNotFound
+from discord.ext import tasks, commands
+from discord.ext.commands import CommandNotFound, MissingRequiredArgument
 from gtts import gTTS
 from github import Github
 import base64
@@ -21,6 +21,9 @@ from oauth2client.service_account import ServiceAccountCredentials #정산
 from io import StringIO
 import urllib.request
 from math import ceil, floor
+import aiohttp
+from pymongo import MongoClient
+import pymongo, ssl, traceback, random
 
 ##################### 로깅 ###########################
 log_stream = StringIO()    
