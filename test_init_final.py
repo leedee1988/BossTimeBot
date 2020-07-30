@@ -81,10 +81,6 @@ access_token = os.environ["BOT_TOKEN"]
 git_access_token = os.environ["GIT_TOKEN"]			
 git_access_repo = os.environ["GIT_REPO"]			
 git_access_repo_restart = os.environ["GIT_REPO_RESTART"]			
-mongoDB_HOST = os.environ["MONGODB_HOST"]
-user_ID = os.environ["USER_ID"]
-user_PASSWORD = os.environ["USER_PW"]
-time_Zone = os.environ["TIME_ZONE"]
 
 g = Github(git_access_token)
 repo = g.get_repo(git_access_repo)
@@ -143,12 +139,6 @@ def init():
 
 	global tmp_racing_unit
 
-	global commandSetting_jungsan
-	global basicSetting_jungsan
-
-	basicSetting_jungsan = []
-	commandSetting_jungsan = []
-
 	command = []
 	tmp_bossData = []
 	tmp_fixed_bossData = []
@@ -174,11 +164,6 @@ def init():
 	file_data4 = base64.b64decode(command_inidata.content)
 	file_data4 = file_data4.decode('utf-8')
 	command_inputData = file_data4.split('\n')
-
-	command_inidata_jungsan = repo.get_contents("command_jungsan.ini")
-	file_data7 = base64.b64decode(command_inidata_jungsan.content)
-	file_data7 = file_data7.decode('utf-8')
-	commandData_jungsan = file_data7.split('\n')
 	
 	boss_inidata = repo.get_contents("boss.ini")
 	file_data3 = base64.b64decode(boss_inidata.content)
@@ -215,9 +200,6 @@ def init():
 
 	for i in range(command_inputData.count('\r')):
 		command_inputData.remove('\r')
-
-	for i in range(commandData_jungsan.count('\r')):
-		commandData_jungsan.remove('\r')
 		
 	for i in range(boss_inputData.count('\r')):
 		boss_inputData.remove('\r')
@@ -232,7 +214,6 @@ def init():
 		item_inputData.remove('\r')
 
 	del(command_inputData[0])
-	del(commandData_jungsan[0])
 	del(boss_inputData[0])
 	del(fixed_inputData[0])
 	del(kill_inputData[0])
@@ -268,29 +249,6 @@ def init():
 		command.append(fc)
 		fc = []
 		#command.append(command_inputData[i][12:].rstrip('\r'))     #command[0] ~ [24] : 명령어
-
-	############## 분배봇 초기 설정 리스트 #####################
-	basicSetting_jungsan.append(access_token)
-	basicSetting_jungsan.append(mongoDB_HOST)
-	basicSetting_jungsan.append(user_ID)
-	basicSetting_jungsan.append(user_PASSWORD)
-
-	# basicSetting_jungsan[0] = bot_token
-	# basicSetting_jungsan[1] = host
-	# basicSetting_jungsan[2] = user_ID
-	# basicSetting_jungsan[3] = user_PASSWORD
-	# basicSetting_jungsan[4] = backup_period
-	# basicSetting_jungsan[5] = checktime
-	# basicSetting_jungsan[6] = distributionchannel
-	# basicSetting_jungsan[7] = tax
-	# basicSetting_jungsan[8] = timezone
-
-	############## 보탐봇 명령어 리스트 #####################
-	for i in range(len(commandData_jungsan)):
-		tmp_command = commandData_jungsan[i][(commandData_jungsan[0].find("="))+2:].rstrip('\r')
-		fc = tmp_command.split(', ')
-		commandSetting_jungsan.append(fc)
-		fc = []
 
 	################## 척살 명단 ###########################
 	for i in range(len(kill_inputData)):
