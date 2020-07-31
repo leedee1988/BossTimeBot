@@ -1239,7 +1239,7 @@ class IlsangDistributionBot(commands.AutoShardedBot):
 		print("===========")
 
 		channel_name, channel_id = get_guild_channel_info_sungsan(self)
-		channel_voice_name, channel_voice_id = await get_guild_channel_info()
+		channel_voice_name, channel_voice_id = await get_guild_channel_info(self)
 
 		await dbLoad()
 
