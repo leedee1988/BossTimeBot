@@ -939,13 +939,13 @@ async def data_list_Save(filename, first_line : str = "-----------",  save_data 
 		pass
 
 #서버(길드) 정보 
-async def get_guild_channel_info():
+async def get_guild_channel_info(bot):
 	text_channel_name : list = []
 	text_channel_id : list = []
 	voice_channel_name : list = []
 	voice_channel_id : list = []
 	
-	for guild in client.guilds:
+	for guild in bot.guilds:
 		for text_channel in guild.text_channels:
 			text_channel_name.append(text_channel.name)
 			text_channel_id.append(str(text_channel.id))
@@ -953,6 +953,18 @@ async def get_guild_channel_info():
 			voice_channel_name.append(voice_channel.name)
 			voice_channel_id.append(str(voice_channel.id))
 	return text_channel_name, text_channel_id, voice_channel_name, voice_channel_id
+
+#서버(길드) 정보 
+def get_guild_channel_info_sungsan(bot):
+	text_channel_name : list = []
+	text_channel_id : list = []
+	
+	for guild in bot.guilds:
+		for text_channel in guild.text_channels:
+			text_channel_name.append(text_channel.name)
+			text_channel_id.append(str(text_channel.id))
+
+	return text_channel_name, text_channel_id
 
 #초성추출 함수
 def convertToInitialLetters(text):
@@ -1045,18 +1057,6 @@ def is_manager():
 			return True
 		return False
 	return commands.check(pred)
-
-#서버(길드) 정보 
-def get_guild_channel_info_sungsan(bot):
-	text_channel_name : list = []
-	text_channel_id : list = []
-	
-	for guild in bot.guilds:
-		for text_channel in guild.text_channels:
-			text_channel_name.append(text_channel.name)
-			text_channel_id.append(str(text_channel.id))
-
-	return text_channel_name, text_channel_id
 
 #detail embed
 def get_detail_embed(info : dict = {}):
