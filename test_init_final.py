@@ -939,7 +939,7 @@ async def data_list_Save(filename, first_line : str = "-----------",  save_data 
 		pass
 
 #서버(길드) 정보 
-async def get_guild_channel_info(bot):
+def get_guild_channel_info(bot):
 	text_channel_name : list = []
 	text_channel_id : list = []
 	voice_channel_name : list = []
@@ -1238,8 +1238,8 @@ class IlsangDistributionBot(commands.AutoShardedBot):
 		print(self.user.id)
 		print("===========")
 
-		channel_name, channel_id = get_guild_channel_info_sungsan(self)
-		channel_voice_name, channel_voice_id = await get_guild_channel_info(self)
+		channel_name, channel_id, channel_voice_name, channel_voice_id(self)
+		jungsan_channel_name, jungsan_channel_id = get_guild_channel_info_sungsan(self)
 
 		await dbLoad()
 
@@ -1295,7 +1295,7 @@ class IlsangDistributionBot(commands.AutoShardedBot):
 			basicSetting[7] = ""
 			print(f"설정된 채널 값이 없거나 잘못 됐습니다. **[{command[0][0]}]** 명령어 먼저 입력하여 사용해주시기 바랍니다.")
 
-		if str(basicSetting_jungsan[6]) in channel_id:
+		if str(basicSetting_jungsan[6]) in jungsan_channel_id:
 			print(f"< 분배 텍스트채널 [{self.get_channel(int(basicSetting_jungsan[6])).name}] 접속완료 >")
 		else:
 			basicSetting_jungsan[6] = 0
