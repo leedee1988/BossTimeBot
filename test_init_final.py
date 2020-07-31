@@ -1238,8 +1238,8 @@ class IlsangDistributionBot(commands.AutoShardedBot):
 		print(self.user.id)
 		print("===========")
 
-		channel_name, channel_id, channel_voice_name, channel_voice_id(self)
 		jungsan_channel_name, jungsan_channel_id = get_guild_channel_info_sungsan(self)
+		channel_name, channel_id, channel_voice_name, channel_voice_id = get_guild_channel_info(self)
 
 		await dbLoad()
 
