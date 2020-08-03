@@ -1331,7 +1331,7 @@ class settingCog(commands.Cog):
 		self.guild_db_log = self.bot.db.jungsan.guild_log
 
 	################ 채널등록 ################ 
-	@commands.has_permissions(manage_roles=True)
+	@commands.has_permissions(manage_nicknames=True)
 	@commands.command(name=commandSetting_jungsan[36][0], aliases=commandSetting_jungsan[36][1:])
 	async def join_channel(self, ctx, *, args : str = None):
 		global basicSetting_jungsan
@@ -1617,7 +1617,7 @@ class adminCog(commands.Cog):
 
 	################ member_db초기화 ################ .
 	@is_manager()
-	@commands.has_permissions(manage_roles=True)
+	@commands.has_permissions(manage_nicknames=True)
 	@commands.command(name=commandSetting_jungsan[0][0], aliases=commandSetting_jungsan[0][1:])
 	async def initialize_all_member_data(self, ctx):
 		if ctx.message.channel.id != int(basicSetting_jungsan[6]) or basicSetting_jungsan[6] == "":
@@ -1654,7 +1654,7 @@ class adminCog(commands.Cog):
 
 	################ jungsan_db초기화 ################
 	@is_manager()
-	@commands.has_permissions(manage_roles=True)
+	@commands.has_permissions(manage_nicknames=True)
 	@commands.command(name=commandSetting_jungsan[1][0], aliases=commandSetting_jungsan[1][1:])
 	async def initialize_all_jungsan_data(self, ctx):
 		if ctx.message.channel.id != int(basicSetting_jungsan[6]) or basicSetting_jungsan[6] == "":
@@ -1691,7 +1691,7 @@ class adminCog(commands.Cog):
 
 	################ guild_db초기화 ################
 	@is_manager()
-	@commands.has_permissions(manage_roles=True)
+	@commands.has_permissions(manage_nicknames=True)
 	@commands.command(name=commandSetting_jungsan[2][0], aliases=commandSetting_jungsan[2][1:])
 	async def initialize_all_guild_data(self, ctx):
 		global basicSetting_jungsan
@@ -1749,7 +1749,7 @@ class adminCog(commands.Cog):
 
 	################ backup_db초기화 ################
 	@is_manager()
-	@commands.has_permissions(manage_roles=True)
+	@commands.has_permissions(manage_nicknames=True)
 	@commands.command(name=commandSetting_jungsan[3][0], aliases=commandSetting_jungsan[3][1:])
 	async def initialize_all_backup_data(self, ctx):
 		if ctx.message.channel.id != int(basicSetting_jungsan[6]) or basicSetting_jungsan[6] == "":
@@ -1871,7 +1871,7 @@ class memberCog(commands.Cog):
 		self.guild_db_log = self.bot.db.jungsan.guild_log
 
 	################ 총무등록 ################ 
-	@commands.has_permissions(manage_roles=True)
+	@commands.has_permissions(manage_nicknames=True)
 	@commands.command(name=commandSetting_jungsan[4][0], aliases=commandSetting_jungsan[4][1:])
 	async def set_manager(self, ctx, *, args : str = None):
 		if ctx.message.channel.id != int(basicSetting_jungsan[6]) or basicSetting_jungsan[6] == "":
@@ -1892,7 +1892,7 @@ class memberCog(commands.Cog):
 		return  await ctx.send(f"**[{args}]**님을 총무로 등록 하였습니다.")
 
 	################ 총무삭제 ################ 
-	@commands.has_permissions(manage_roles=True)
+	@commands.has_permissions(manage_nicknames=True)
 	@commands.command(name=commandSetting_jungsan[5][0], aliases=commandSetting_jungsan[5][1:])
 	async def delete_manager(self, ctx, *, args : str = None):
 		if ctx.message.channel.id != int(basicSetting_jungsan[6]) or basicSetting_jungsan[6] == "":
