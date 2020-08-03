@@ -529,10 +529,10 @@ async def task():
 	
 	if chflg == 1 : 
 		if voice_client1.is_connected() == False :
-			voice_client1 = await self.get_channel(basicSetting[6]).connect(reconnect=True)
+			voice_client1 = await client.get_channel(basicSetting[6]).connect(reconnect=True)
 			if voice_client1.is_connected() :
 				await dbLoad()
-				await self.get_channel(channel).send( '< 다시 왔습니다! >', tts=False)
+				await client.get_channel(channel).send( '< 다시 왔습니다! >', tts=False)
 				print("명치복구완료!")
 
 	while not client.is_closed():
@@ -540,7 +540,7 @@ async def task():
 		if log_stream.getvalue().find("Awaiting") != -1:
 			log_stream.truncate(0)
 			log_stream.seek(0)
-			await self.get_channel(channel).send( '< 디코접속에러! 잠깐 나갔다 올께요! >', tts=False)
+			await client.get_channel(channel).send( '< 디코접속에러! 잠깐 나갔다 올께요! >', tts=False)
 			await dbSave()
 			raise SystemExit
 		
@@ -560,7 +560,7 @@ async def task():
 				await FixedBossDateSave()
 				await data_list_Save("kill_list.ini", "-----척살명단-----", kill_Data)
 				await data_list_Save("item_list.ini", "-----아이템목록-----", item_Data)
-				#await self.get_channel(channel).send('<갑자기 인사해도 놀라지마세요!>', tts=False)
+				#await client.get_channel(channel).send('<갑자기 인사해도 놀라지마세요!>', tts=False)
 				print("보탐봇재시작!")
 				endTime = endTime + datetime.timedelta(days = int(basicSetting[13]))
 				await voice_client1.disconnect()
@@ -590,7 +590,7 @@ async def task():
 					if basicSetting[3] != '0':
 						if fixed_bossFlag0[i] == False:
 							fixed_bossFlag0[i] = True
-							await self.get_channel(channel).send("```" + fixed_bossData[i][0] + ' ' + basicSetting[3] + '분 전 ' + fixed_bossData[i][3] +' [' +  fixed_bossTime[i].strftime('%H:%M:%S') + ']```', tts=False)
+							await client.get_channel(channel).send("```" + fixed_bossData[i][0] + ' ' + basicSetting[3] + '분 전 ' + fixed_bossData[i][3] +' [' +  fixed_bossTime[i].strftime('%H:%M:%S') + ']```', tts=False)
 							await PlaySound(voice_client1, './sound/' + fixed_bossData[i][0] + '알림1.mp3')
 
 				################ before_alert ################ 
@@ -598,7 +598,7 @@ async def task():
 					if basicSetting[1] != '0' :
 						if fixed_bossFlag[i] == False:
 							fixed_bossFlag[i] = True
-							await self.get_channel(channel).send("```" + fixed_bossData[i][0] + ' ' + basicSetting[1] + '분 전 ' + fixed_bossData[i][3] +' [' +  fixed_bossTime[i].strftime('%H:%M:%S') + ']```', tts=False)
+							await client.get_channel(channel).send("```" + fixed_bossData[i][0] + ' ' + basicSetting[1] + '분 전 ' + fixed_bossData[i][3] +' [' +  fixed_bossTime[i].strftime('%H:%M:%S') + ']```', tts=False)
 							await PlaySound(voice_client1, './sound/' + fixed_bossData[i][0] + '알림.mp3')
 				
 				################ 보스 젠 시간 확인 ################
@@ -610,7 +610,7 @@ async def task():
 							description= "```" + fixed_bossData[i][0] + fixed_bossData[i][4] + "```" ,
 							color=0x00ff00
 							)
-					await self.get_channel(channel).send(embed=embed, tts=False)
+					await client.get_channel(channel).send(embed=embed, tts=False)
 					await PlaySound(voice_client1, './sound/' + fixed_bossData[i][0] + '젠.mp3')
 
 			################ 일반 보스 확인 ################ 
@@ -621,9 +621,9 @@ async def task():
 						if bossFlag0[i] == False:
 							bossFlag0[i] = True
 							if bossData[i][6] != '' :
-								await self.get_channel(channel).send("```" + bossData[i][0] + ' ' + basicSetting[3] + '분 전 ' + bossData[i][3] + " [" +  bossTimeString[i] + "]" + '\n<' + bossData[i][6] + '>```', tts=False)
+								await client.get_channel(channel).send("```" + bossData[i][0] + ' ' + basicSetting[3] + '분 전 ' + bossData[i][3] + " [" +  bossTimeString[i] + "]" + '\n<' + bossData[i][6] + '>```', tts=False)
 							else :
-								await self.get_channel(channel).send("```" + bossData[i][0] + ' ' + basicSetting[3] + '분 전 ' + bossData[i][3] + " [" +  bossTimeString[i] + "]```", tts=False)
+								await client.get_channel(channel).send("```" + bossData[i][0] + ' ' + basicSetting[3] + '분 전 ' + bossData[i][3] + " [" +  bossTimeString[i] + "]```", tts=False)
 							await PlaySound(voice_client1, './sound/' + bossData[i][0] + '알림1.mp3')
 
 				################ before_alert ################
@@ -632,9 +632,9 @@ async def task():
 						if bossFlag[i] == False:
 							bossFlag[i] = True
 							if bossData[i][6] != '' :
-								await self.get_channel(channel).send("```" + bossData[i][0] + ' ' + basicSetting[1] + '분 전 ' + bossData[i][3] + " [" +  bossTimeString[i] + "]" + '\n<' + bossData[i][6] + '>```', tts=False)
+								await client.get_channel(channel).send("```" + bossData[i][0] + ' ' + basicSetting[1] + '분 전 ' + bossData[i][3] + " [" +  bossTimeString[i] + "]" + '\n<' + bossData[i][6] + '>```', tts=False)
 							else :
-								await self.get_channel(channel).send("```" + bossData[i][0] + ' ' + basicSetting[1] + '분 전 ' + bossData[i][3] + " [" +  bossTimeString[i] + "]```", tts=False)
+								await client.get_channel(channel).send("```" + bossData[i][0] + ' ' + basicSetting[1] + '분 전 ' + bossData[i][3] + " [" +  bossTimeString[i] + "]```", tts=False)
 							await PlaySound(voice_client1, './sound/' + bossData[i][0] + '알림.mp3')
 
 				################ 보스 젠 시간 확인 ################ 
@@ -657,7 +657,7 @@ async def task():
 								description= "```" + bossData[i][0] + bossData[i][4] + "```" ,
 								color=0x00ff00
 								)
-					await self.get_channel(channel).send(embed=embed, tts=False)
+					await client.get_channel(channel).send(embed=embed, tts=False)
 					await PlaySound(voice_client1, './sound/' + bossData[i][0] + '젠.mp3')
 
 				################ 보스 자동 멍 처리 ################ 
@@ -676,10 +676,10 @@ async def task():
 								bossMungFlag[i] = False
 								bossMungCnt[i] = 0
 								if bossData[i][2] == '0':
-									await self.get_channel(channel).send(f'```자동 미입력 횟수 {basicSetting[17]}회 초과! [{bossData[i][0]}] 삭제!```', tts=False)
+									await client.get_channel(channel).send(f'```자동 미입력 횟수 {basicSetting[17]}회 초과! [{bossData[i][0]}] 삭제!```', tts=False)
 									print ('자동미입력 횟수초과 <' + bossData[i][0] + ' 삭제완료>')
 								else:
-									await self.get_channel(channel).send(f'```자동 멍처리 횟수 {basicSetting[17]}회 초과! [{bossData[i][0]}] 삭제!```', tts=False)
+									await client.get_channel(channel).send(f'```자동 멍처리 횟수 {basicSetting[17]}회 초과! [{bossData[i][0]}] 삭제!```', tts=False)
 									print ('자동멍처리 횟수초과 <' + bossData[i][0] + ' 삭제완료>')
 								#await dbSave()
 								
@@ -693,12 +693,12 @@ async def task():
 									tmp_bossTime[i] = bossTime[i] = nextTime = tmp_bossTime[i]+datetime.timedelta(hours=int(bossData[i][1]), minutes=int(bossData[i][5]))
 									tmp_bossTimeString[i] = bossTimeString[i] = nextTime.strftime('%H:%M:%S')
 									tmp_bossDateString[i] = bossDateString[i] = nextTime.strftime('%Y-%m-%d')
-									await self.get_channel(channel).send("```" +  bossData[i][0] + ' 미입력 됐습니다.```', tts=False)
+									await client.get_channel(channel).send("```" +  bossData[i][0] + ' 미입력 됐습니다.```', tts=False)
 									embed = discord.Embed(
 										description= '```다음 ' + bossData[i][0] + ' ' + bossTimeString[i] + '입니다.```',
 										color=0xff0000
 										)
-									await self.get_channel(channel).send(embed=embed, tts=False)
+									await client.get_channel(channel).send(embed=embed, tts=False)
 									await PlaySound(voice_client1, './sound/' + bossData[i][0] + '미입력.mp3')
 								################ 멍 보스 ################
 								else :
@@ -709,12 +709,12 @@ async def task():
 									tmp_bossTime[i] = bossTime[i] = nextTime = tmp_bossTime[i]+datetime.timedelta(hours=int(bossData[i][1]), minutes=int(bossData[i][5]))
 									tmp_bossTimeString[i] = bossTimeString[i] = nextTime.strftime('%H:%M:%S')
 									tmp_bossDateString[i] = bossDateString[i] = nextTime.strftime('%Y-%m-%d')
-									await self.get_channel(channel).send("```" + bossData[i][0] + ' 멍 입니다.```')
+									await client.get_channel(channel).send("```" + bossData[i][0] + ' 멍 입니다.```')
 									embed = discord.Embed(
 										description= '```다음 ' + bossData[i][0] + ' ' + bossTimeString[i] + '입니다.```',
 										color=0xff0000
 										)
-									await self.get_channel(channel).send(embed=embed, tts=False)
+									await client.get_channel(channel).send(embed=embed, tts=False)
 									await PlaySound(voice_client1, './sound/' + bossData[i][0] + '멍.mp3')
 
 		await asyncio.sleep(1) # task runs every 60 seconds
@@ -870,7 +870,7 @@ async def dbLoad():
 		LoadChk = 0
 		print ("<불러오기 완료>")
 	else:
-		#await self.get_channel(channel).send('<보스타임 정보가 없습니다.>', tts=False)
+		#await client.get_channel(channel).send('<보스타임 정보가 없습니다.>', tts=False)
 		LoadChk = 1
 		print ("보스타임 정보가 없습니다.")
 
@@ -939,13 +939,13 @@ async def data_list_Save(filename, first_line : str = "-----------",  save_data 
 		pass
 
 #서버(길드) 정보 
-def get_guild_channel_info(bot):
+async def get_guild_channel_info():
 	text_channel_name : list = []
 	text_channel_id : list = []
 	voice_channel_name : list = []
 	voice_channel_id : list = []
 	
-	for guild in bot.guilds:
+	for guild in client.guilds:
 		for text_channel in guild.text_channels:
 			text_channel_name.append(text_channel.name)
 			text_channel_id.append(str(text_channel.id))
@@ -953,18 +953,6 @@ def get_guild_channel_info(bot):
 			voice_channel_name.append(voice_channel.name)
 			voice_channel_id.append(str(voice_channel.id))
 	return text_channel_name, text_channel_id, voice_channel_name, voice_channel_id
-
-#서버(길드) 정보 
-def get_guild_channel_info_sungsan(bot):
-	text_channel_name : list = []
-	text_channel_id : list = []
-	
-	for guild in bot.guilds:
-		for text_channel in guild.text_channels:
-			text_channel_name.append(text_channel.name)
-			text_channel_id.append(str(text_channel.id))
-
-	return text_channel_name, text_channel_id
 
 #초성추출 함수
 def convertToInitialLetters(text):
@@ -1058,6 +1046,18 @@ def is_manager():
 		return False
 	return commands.check(pred)
 
+#서버(길드) 정보 
+def get_guild_channel_info_sungsan(bot):
+	text_channel_name : list = []
+	text_channel_id : list = []
+	
+	for guild in bot.guilds:
+		for text_channel in guild.text_channels:
+			text_channel_name.append(text_channel.name)
+			text_channel_id.append(str(text_channel.id))
+
+	return text_channel_name, text_channel_id
+
 #detail embed
 def get_detail_embed(info : dict = {}):
 	# "_id" : int = 순번
@@ -1079,7 +1079,7 @@ def get_detail_embed(info : dict = {}):
 	# "image_url":""
 
 	embed = discord.Embed(
-			title = "📜 등록 정보",
+			title = "? 등록 정보",
 			description = "",
 			color=0x00ff00
 			)
@@ -1202,7 +1202,7 @@ class IlsangDistributionBot(commands.AutoShardedBot):
 				result_guild_log = self.db.jungsan.guild_log.insert_one(insert_log_data)
 
 				embed = discord.Embed(
-						title = f"💰  혈비 자동 적립 ({(datetime.datetime.now() + datetime.timedelta(hours = int(basicSetting_jungsan[8]))).strftime('%y-%m-%d %H:%M:%S')})",
+						title = f"?  혈비 자동 적립 ({(datetime.datetime.now() + datetime.timedelta(hours = int(basicSetting_jungsan[8]))).strftime('%y-%m-%d %H:%M:%S')})",
 						description = f"",
 						color=0x00ff00
 						)
@@ -1214,96 +1214,21 @@ class IlsangDistributionBot(commands.AutoShardedBot):
 				await self.get_channel(int(basicSetting_jungsan[6])).send(embed = embed)
 
 	async def on_ready(self):
-		global basicSetting
-
-		global channel
-		
-		global voice_client1
-
-		global channel_info
-		global channel_name
-		global channel_id
-		global channel_voice_name
-		global channel_voice_id
-		global channel_type
-		
-		global chkvoicechannel
-		global chflg
-		
-		global endTime
-		global setting_channel_name
-
 		print("Logged in as ") #화면에 봇의 아이디, 닉네임이 출력됩니다.
 		print(self.user.name)
 		print(self.user.id)
 		print("===========")
 
-		jungsan_channel_name, jungsan_channel_id = get_guild_channel_info_sungsan(self)
-		channel_name, channel_id, channel_voice_name, channel_voice_id = get_guild_channel_info(self)
+		channel_name, channel_id = get_guild_channel_info_sungsan(self)
 
-		await dbLoad()
-
-		if str(basicSetting[6]) in channel_voice_id and str(basicSetting[7]) in channel_id:
-			voice_client1 = await self.get_channel(basicSetting[6]).connect(reconnect=True)
-			channel = basicSetting[7]
-
-			setting_channel_name = self.get_channel(basicSetting[7]).name
-
-			now = datetime.datetime.now() + datetime.timedelta(hours = int(basicSetting[0]))
-
-			print('< 접속시간 [' + now.strftime('%Y-%m-%d ') + now.strftime('%H:%M:%S') + '] >')
-			print('< 텍스트채널 [' + self.get_channel(basicSetting[7]).name + '] 접속완료>')
-			print('< 음성채널 [' + self.get_channel(basicSetting[6]).name + '] 접속완료>')
-			if basicSetting[8] != "":
-				if str(basicSetting[8]) in channel_id:
-					print('< 사다리채널 [' + self.get_channel(int(basicSetting[8])).name + '] 접속완료 >')
-				else:
-					basicSetting[8] = ""
-					print(f"사다리채널 ID 오류! [{command[28][0]} 사다리] 명령으로 재설정 바랍니다.")
-			if basicSetting[11] != "":
-				if str(basicSetting[11]) in channel_id:
-					print('< 정산채널 [' + self.get_channel(int(basicSetting[11])).name + '] 접속완료>')
-				else:
-					basicSetting[11] = ""
-					print(f"정산채널 ID 오류! [{command[28][0]} 정산] 명령으로 재설정 바랍니다.")
-			if basicSetting[18] != "":
-				if str(basicSetting[18]) in channel_id:
-					print('< 척살채널 [' + self.get_channel(int(basicSetting[18])).name + '] 접속완료>')
-				else:
-					basicSetting[18] = ""
-					print(f"척살채널 ID 오류! [{command[28][0]} 척살] 명령으로 재설정 바랍니다.")
-			if basicSetting[19] != "":
-				if str(basicSetting[19]) in channel_id:
-					print('< 경주채널 [' + self.get_channel(int(basicSetting[19])).name + '] 접속완료>')
-				else:
-					basicSetting[19] = ""
-					print(f"경주채널 ID 오류! [{command[28][0]} 경주] 명령으로 재설정 바랍니다.")
-			if basicSetting[20] != "":
-				if str(basicSetting[20]) in channel_id:
-					print('< 아이템채널 [' + self.get_channel(int(basicSetting[20])).name + '] 접속완료>')
-				else:
-					basicSetting[20] = ""
-					print(f"아이템채널 ID 오류! [{command[28][0]} 아이템] 명령으로 재설정 바랍니다.")
-			if int(basicSetting[13]) != 0 :
-				print('< 보탐봇 재시작 시간 ' + endTime.strftime('%Y-%m-%d ') + endTime.strftime('%H:%M:%S') + ' >')
-				print('< 보탐봇 재시작 주기 ' + basicSetting[13] + '일 >')
-			else :
-				print('< 보탐봇 재시작 설정안됨 >')
-			chflg = 1
-		else:
-			basicSetting[6] = ""
-			basicSetting[7] = ""
-			print(f"설정된 채널 값이 없거나 잘못 됐습니다. **[{command[0][0]}]** 명령어 먼저 입력하여 사용해주시기 바랍니다.")
-
-		if str(basicSetting_jungsan[6]) in jungsan_channel_id:
-			print(f"< 분배 텍스트채널 [{self.get_channel(int(basicSetting_jungsan[6])).name}] 접속완료 >")
+		if str(basicSetting_jungsan[6]) in channel_id:
+			print(f"< 접속시간 [{(datetime.datetime.now() + datetime.timedelta(hours = int(basicSetting_jungsan[8]))).strftime('%y-%m-%d %H:%M:%S')}] >")
+			print(f"< 텍스트채널 [{self.get_channel(int(basicSetting_jungsan[6])).name}] 접속완료 >")
 		else:
 			basicSetting_jungsan[6] = 0
-			print(f"분배 설정된 채널 값이 없거나 잘못 됐습니다. [{commandSetting_jungsan[36][0]}] 명령어를 먼저 입력하여 사용해주시기 바랍니다.")
+			print(f"설정된 채널 값이 없거나 잘못 됐습니다. [{commandSetting_jungsan[36][0]}] 명령어를 먼저 입력하여 사용해주시기 바랍니다.")
 		
-		# 디스코드에는 현재 본인이 어떤 게임을 플레이하는지 보여주는 기능이 있습니다.
-		# 이 기능을 사용하여 봇의 상태를 간단하게 출력해줄 수 있습니다.
-		await self.change_presence(status=discord.Status.dnd, activity=discord.Game(name=command[1][0], type=1), afk=False)
+		await self.change_presence(status=discord.Status.dnd, activity=discord.Game(name=f"{commandSetting_jungsan[39][0]}", type=1), afk = False)
 
 	async def on_command_error(self, ctx : commands.Context, error : commands.CommandError):
 		if isinstance(error, CommandNotFound):
@@ -1331,7 +1256,7 @@ class settingCog(commands.Cog):
 		self.guild_db_log = self.bot.db.jungsan.guild_log
 
 	################ 채널등록 ################ 
-	@commands.has_permissions(manage_nicknames=True)
+	@commands.has_permissions(manage_guild=True)
 	@commands.command(name=commandSetting_jungsan[36][0], aliases=commandSetting_jungsan[36][1:])
 	async def join_channel(self, ctx, *, args : str = None):
 		global basicSetting_jungsan
@@ -1358,8 +1283,8 @@ class settingCog(commands.Cog):
 						curr_guild_info = guild
 						print(curr_guild_info.name, guild.name, curr_guild_info.get_channel(int(basicSetting_jungsan[6])).name)
 
-			emoji_list : list = ["⭕", "❌"]
-			guild_error_message = await ctx.send(f"이미 **[{curr_guild_info.name}]** 서버 **[{curr_guild_info.get_channel(int(basicSetting_jungsan[6])).name}]** 채널이 명령어 채널로 설정되어 있습니다.\n해당 채널로 명령어 채널을 변경 하시려면 ⭕ 그대로 사용하시려면 ❌ 를 눌러주세요.\n({basicSetting_jungsan[5]}이내 미입력시 기존 설정 그대로 설정됩니다.)", tts=False)
+			emoji_list : list = ["?", "?"]
+			guild_error_message = await ctx.send(f"이미 **[{curr_guild_info.name}]** 서버 **[{curr_guild_info.get_channel(int(basicSetting_jungsan[6])).name}]** 채널이 명령어 채널로 설정되어 있습니다.\n해당 채널로 명령어 채널을 변경 하시려면 ? 그대로 사용하시려면 ? 를 눌러주세요.\n({basicSetting_jungsan[5]}이내 미입력시 기존 설정 그대로 설정됩니다.)", tts=False)
 
 			for emoji in emoji_list:
 				await guild_error_message.add_reaction(emoji)
@@ -1371,7 +1296,7 @@ class settingCog(commands.Cog):
 			except asyncio.TimeoutError:
 				return await ctx.send(f"시간이 초과됐습니다. **[{curr_guild_info.name}]** 서버 **[{curr_guild_info.get_channel(basicSetting_jungsan[6]).name}]** 채널에서 사용해주세요!")
 			
-			if str(reaction) == "⭕":
+			if str(reaction) == "?":
 				basicSetting_jungsan[6] = str(ctx.message.channel.id)
 
 				print ('[ ', basicSetting_jungsan[6], ' ]')
@@ -1494,13 +1419,13 @@ class adminCog(commands.Cog):
 			return await ctx.send(f"{ctx.author.mention}님은 혈원으로 등록되어 있지 않습니다!")
 
 		embed = discord.Embed(
-			title = f"⚙️ 기본 설정(v4)",
+			title = f"?? 기본 설정(v4)",
 			color=0xff00ff
 			)
-		embed.add_field(name = f"🚫 삭제 주기", value = f"```{basicSetting_jungsan[4]} 일```")
-		embed.add_field(name = f"⌛ 체크 시간", value = f"```{basicSetting_jungsan[5]} 초```")
-		embed.add_field(name = f"⚖️ 수수료", value = f"```{basicSetting_jungsan[7]} %```")
-		embed.add_field(name = f"🗨️ 명령 채널", value = f"```{ctx.message.channel.name}```")
+		embed.add_field(name = f"? 삭제 주기", value = f"```{basicSetting_jungsan[4]} 일```")
+		embed.add_field(name = f"? 체크 시간", value = f"```{basicSetting_jungsan[5]} 초```")
+		embed.add_field(name = f"?? 수수료", value = f"```{basicSetting_jungsan[7]} %```")
+		embed.add_field(name = f"?? 명령 채널", value = f"```{ctx.message.channel.name}```")
 		return await ctx.send(embed = embed, tts=False)
 
 	################ 현재시간 확인 ################ 
@@ -1604,20 +1529,20 @@ class adminCog(commands.Cog):
 			etc_command_list += f"{','.join(commandSetting_jungsan[35])} [거래소금액] [실거래가] (거래소세금)\n"   # 페이백
 			
 			embed = discord.Embed(
-					title = "🕹️ 분배봇 사용법",
+					title = "?? 분배봇 사용법",
 					description= f"```득템 → 정산등록 → 판매입력 → 정산처리 → 끝!```",
 					color=0xff00ff
 					)
-			embed.add_field(name = f"⚙️ [ 관리자 전용 명령어 ]", value = f"```css\n{admin_command_list}```", inline = False)
-			embed.add_field(name = f"🤴 [ 총무 전용 명령어 ]", value = f"```css\n{manager_command_list}```", inline = False)
-			embed.add_field(name = f"🧑 [ 일반 명령어 ]", value = f"```css\n{member_command_list}```", inline = False)
-			embed.add_field(name = f"🔧 [ 기타 명령어 ]", value = f"```css\n{etc_command_list}```", inline = False)
+			embed.add_field(name = f"?? [ 관리자 전용 명령어 ]", value = f"```css\n{admin_command_list}```", inline = False)
+			embed.add_field(name = f"? [ 총무 전용 명령어 ]", value = f"```css\n{manager_command_list}```", inline = False)
+			embed.add_field(name = f"? [ 일반 명령어 ]", value = f"```css\n{member_command_list}```", inline = False)
+			embed.add_field(name = f"? [ 기타 명령어 ]", value = f"```css\n{etc_command_list}```", inline = False)
 			embed.set_footer(text = f"※ '분배완료'된 것 중 30일이 지난 건은 자동으로 삭제\n    '미입력' 상태의 등록건만 수정 가능\n    '분배중' 상태의 등록건만 정산 가능\n    거래소세금 : 미입력시 {basicSetting_jungsan[7]}%")
 			return await ctx.send( embed=embed, tts=False)
 
 	################ member_db초기화 ################ .
 	@is_manager()
-	@commands.has_permissions(manage_nicknames=True)
+	@commands.has_permissions(manage_guild=True)
 	@commands.command(name=commandSetting_jungsan[0][0], aliases=commandSetting_jungsan[0][1:])
 	async def initialize_all_member_data(self, ctx):
 		if ctx.message.channel.id != int(basicSetting_jungsan[6]) or basicSetting_jungsan[6] == "":
@@ -1628,9 +1553,9 @@ class adminCog(commands.Cog):
 		if not member_data:
 			return await ctx.send(f"{ctx.author.mention}님은 혈원으로 등록되어 있지 않습니다!")
 
-		emoji_list : list = ["⭕", "❌"]
+		emoji_list : list = ["?", "?"]
 
-		delete_warning_message = await ctx.send(f"**혈원데이터를 초기화 하시면 다시는 복구할 수 없습니다. 정말로 초기화하시겠습니까?**\n**초기화 : ⭕ 취소: ❌**\n({int(basicSetting_jungsan[5])*2}초 동안 입력이 없을시 초기화가 취소됩니다.)", tts=False)
+		delete_warning_message = await ctx.send(f"**혈원데이터를 초기화 하시면 다시는 복구할 수 없습니다. 정말로 초기화하시겠습니까?**\n**초기화 : ? 취소: ?**\n({int(basicSetting_jungsan[5])*2}초 동안 입력이 없을시 초기화가 취소됩니다.)", tts=False)
 		
 		for emoji in emoji_list:
 			await delete_warning_message.add_reaction(emoji)
@@ -1645,16 +1570,16 @@ class adminCog(commands.Cog):
 				await data_regist_warning_message.remove_reaction(emoji, self.bot.user)
 			return await ctx.send(f"시간이 초과됐습니다. **초기화**를 취소합니다!")
 
-		if str(reaction) == "⭕":
+		if str(reaction) == "?":
 			self.member_db.delete_many({})
 			print(f"< 혈원데이터 초기화 완료 >")
-			return await ctx.send(f"☠️ 혈원데이터 초기화 완료! ☠️")
+			return await ctx.send(f"?? 혈원데이터 초기화 완료! ??")
 		else:
 			return await ctx.send(f"**초기화**가 취소되었습니다.\n")		
 
 	################ jungsan_db초기화 ################
 	@is_manager()
-	@commands.has_permissions(manage_nicknames=True)
+	@commands.has_permissions(manage_guild=True)
 	@commands.command(name=commandSetting_jungsan[1][0], aliases=commandSetting_jungsan[1][1:])
 	async def initialize_all_jungsan_data(self, ctx):
 		if ctx.message.channel.id != int(basicSetting_jungsan[6]) or basicSetting_jungsan[6] == "":
@@ -1665,9 +1590,9 @@ class adminCog(commands.Cog):
 		if not member_data:
 			return await ctx.send(f"{ctx.author.mention}님은 혈원으로 등록되어 있지 않습니다!")
 
-		emoji_list : list = ["⭕", "❌"]
+		emoji_list : list = ["?", "?"]
 
-		delete_warning_message = await ctx.send(f"**정산데이터를 초기화 하시면 다시는 복구할 수 없습니다. 정말로 초기화하시겠습니까?**\n**초기화 : ⭕ 취소: ❌**\n({int(basicSetting_jungsan[5])*2}초 동안 입력이 없을시 초기화가 취소됩니다.)", tts=False)
+		delete_warning_message = await ctx.send(f"**정산데이터를 초기화 하시면 다시는 복구할 수 없습니다. 정말로 초기화하시겠습니까?**\n**초기화 : ? 취소: ?**\n({int(basicSetting_jungsan[5])*2}초 동안 입력이 없을시 초기화가 취소됩니다.)", tts=False)
 		
 		for emoji in emoji_list:
 			await delete_warning_message.add_reaction(emoji)
@@ -1682,16 +1607,16 @@ class adminCog(commands.Cog):
 				await data_regist_warning_message.remove_reaction(emoji, self.bot.user)
 			return await ctx.send(f"시간이 초과됐습니다. **초기화**를 취소합니다!")
 
-		if str(reaction) == "⭕":
+		if str(reaction) == "?":
 			self.jungsan_db.delete_many({})
 			print(f"< 정산데이터 초기화 완료 >")
-			return await ctx.send(f"☠️ 정산데이터 초기화 완료! ☠️")
+			return await ctx.send(f"?? 정산데이터 초기화 완료! ??")
 		else:
 			return await ctx.send(f"**초기화**가 취소되었습니다.\n")		
 
 	################ guild_db초기화 ################
 	@is_manager()
-	@commands.has_permissions(manage_nicknames=True)
+	@commands.has_permissions(manage_guild=True)
 	@commands.command(name=commandSetting_jungsan[2][0], aliases=commandSetting_jungsan[2][1:])
 	async def initialize_all_guild_data(self, ctx):
 		global basicSetting_jungsan
@@ -1703,9 +1628,9 @@ class adminCog(commands.Cog):
 		if not member_data:
 			return await ctx.send(f"{ctx.author.mention}님은 혈원으로 등록되어 있지 않습니다!")
 
-		emoji_list : list = ["⭕", "❌"]
+		emoji_list : list = ["?", "?"]
 
-		delete_warning_message = await ctx.send(f"**혈비데이터를 초기화 하시면 다시는 복구할 수 없습니다. 정말로 초기화하시겠습니까?**\n**초기화 : ⭕ 취소: ❌**\n({int(basicSetting_jungsan[5])*2}초 동안 입력이 없을시 초기화가 취소됩니다.)", tts=False)
+		delete_warning_message = await ctx.send(f"**혈비데이터를 초기화 하시면 다시는 복구할 수 없습니다. 정말로 초기화하시겠습니까?**\n**초기화 : ? 취소: ?**\n({int(basicSetting_jungsan[5])*2}초 동안 입력이 없을시 초기화가 취소됩니다.)", tts=False)
 		
 		for emoji in emoji_list:
 			await delete_warning_message.add_reaction(emoji)
@@ -1720,7 +1645,7 @@ class adminCog(commands.Cog):
 				await data_regist_warning_message.remove_reaction(emoji, self.bot.user)
 			return await ctx.send(f"시간이 초과됐습니다. **초기화**를 취소합니다!")
 
-		if str(reaction) == "⭕":
+		if str(reaction) == "?":
 			self.guild_db.delete_many({})
 			self.guild_db_log.delete_many({})
 			init_guild_data : dict = {
@@ -1743,13 +1668,13 @@ class adminCog(commands.Cog):
 			# basicSetting_jungsan[7] = tax
 
 			print(f"< 혈비/로그 데이터 초기화 완료 >")
-			return await ctx.send(f"☠️ 혈비/로그 데이터 초기화 완료! ☠️\n**[{commandSetting_jungsan[36][0]}]** 명령어를 입력하신 후 사용해주시기 바랍니다.")
+			return await ctx.send(f"?? 혈비/로그 데이터 초기화 완료! ??\n**[{commandSetting_jungsan[36][0]}]** 명령어를 입력하신 후 사용해주시기 바랍니다.")
 		else:
 			return await ctx.send(f"**초기화**가 취소되었습니다.\n")	
 
 	################ backup_db초기화 ################
 	@is_manager()
-	@commands.has_permissions(manage_nicknames=True)
+	@commands.has_permissions(manage_guild=True)
 	@commands.command(name=commandSetting_jungsan[3][0], aliases=commandSetting_jungsan[3][1:])
 	async def initialize_all_backup_data(self, ctx):
 		if ctx.message.channel.id != int(basicSetting_jungsan[6]) or basicSetting_jungsan[6] == "":
@@ -1760,9 +1685,9 @@ class adminCog(commands.Cog):
 		if not member_data:
 			return await ctx.send(f"{ctx.author.mention}님은 혈원으로 등록되어 있지 않습니다!")
 
-		emoji_list : list = ["⭕", "❌"]
+		emoji_list : list = ["?", "?"]
 
-		delete_warning_message = await ctx.send(f"**백업데이터를 초기화 하시면 다시는 복구할 수 없습니다. 정말로 초기화하시겠습니까?**\n**초기화 : ⭕ 취소: ❌**\n({int(basicSetting_jungsan[5])*2}초 동안 입력이 없을시 초기화가 취소됩니다.)", tts=False)
+		delete_warning_message = await ctx.send(f"**백업데이터를 초기화 하시면 다시는 복구할 수 없습니다. 정말로 초기화하시겠습니까?**\n**초기화 : ? 취소: ?**\n({int(basicSetting_jungsan[5])*2}초 동안 입력이 없을시 초기화가 취소됩니다.)", tts=False)
 		
 		for emoji in emoji_list:
 			await delete_warning_message.add_reaction(emoji)
@@ -1777,10 +1702,10 @@ class adminCog(commands.Cog):
 				await data_regist_warning_message.remove_reaction(emoji, self.bot.user)
 			return await ctx.send(f"시간이 초과됐습니다. **초기화**를 취소합니다!")
 
-		if str(reaction) == "⭕":
+		if str(reaction) == "?":
 			self.backup_db.delete_many({})
 			print(f"< 백업데이터 초기화 완료 >")
-			return await ctx.send(f"☠️ 백업데이터 초기화 완료! ☠️")
+			return await ctx.send(f"?? 백업데이터 초기화 완료! ??")
 		else:
 			return await ctx.send(f"**초기화**가 취소되었습니다.\n")
 
@@ -1819,7 +1744,7 @@ class adminCog(commands.Cog):
 		detail_info	: str = ""
 		
 		embed = discord.Embed(
-					title = f"📜 혈비 로그",
+					title = f"? 혈비 로그",
 					description = "",
 					color=0x00ff00
 					)
@@ -1841,16 +1766,16 @@ class adminCog(commands.Cog):
 					embed_limit_checker += 1
 					if result_data1['in_out_check']:
 						if result_data1['reason'] != "":
-							detail_info += f"+ 💰 {result_data1['money']} : {', '.join(result_data1['member_list'])} (사유:{result_data1['reason']})\n"
+							detail_info += f"+ ? {result_data1['money']} : {', '.join(result_data1['member_list'])} (사유:{result_data1['reason']})\n"
 						else:
-							detail_info += f"+ 💰 {result_data1['money']} : 혈비 입금\n"
+							detail_info += f"+ ? {result_data1['money']} : 혈비 입금\n"
 					else:
 						if result_data1['reason'] != "":
-							detail_info += f"- 💰 {result_data1['money']} : {', '.join(result_data1['member_list'])} (사유:{result_data1['reason']})\n"
+							detail_info += f"- ? {result_data1['money']} : {', '.join(result_data1['member_list'])} (사유:{result_data1['reason']})\n"
 						else:
-							detail_info += f"- 💰 {result_data1['money']} : {', '.join(result_data1['member_list'])}\n"
+							detail_info += f"- ? {result_data1['money']} : {', '.join(result_data1['member_list'])}\n"
 				
-				embed_list[embed_cnt].title = f"🗓️ {date}"
+				embed_list[embed_cnt].title = f"?? {date}"
 				embed_list[embed_cnt].description = f"```diff\n{detail_info}```"
 
 			if len(embed_list) > 1:
@@ -1871,7 +1796,7 @@ class memberCog(commands.Cog):
 		self.guild_db_log = self.bot.db.jungsan.guild_log
 
 	################ 총무등록 ################ 
-	@commands.has_permissions(manage_nicknames=True)
+	@commands.has_permissions(manage_guild=True)
 	@commands.command(name=commandSetting_jungsan[4][0], aliases=commandSetting_jungsan[4][1:])
 	async def set_manager(self, ctx, *, args : str = None):
 		if ctx.message.channel.id != int(basicSetting_jungsan[6]) or basicSetting_jungsan[6] == "":
@@ -1892,7 +1817,7 @@ class memberCog(commands.Cog):
 		return  await ctx.send(f"**[{args}]**님을 총무로 등록 하였습니다.")
 
 	################ 총무삭제 ################ 
-	@commands.has_permissions(manage_nicknames=True)
+	@commands.has_permissions(manage_guild=True)
 	@commands.command(name=commandSetting_jungsan[5][0], aliases=commandSetting_jungsan[5][1:])
 	async def delete_manager(self, ctx, *, args : str = None):
 		if ctx.message.channel.id != int(basicSetting_jungsan[6]) or basicSetting_jungsan[6] == "":
@@ -1954,22 +1879,22 @@ class memberCog(commands.Cog):
 					member_list += f"{member_info['game_ID']} "
 
 		embed = discord.Embed(
-		title = "👥  혈원 목록",
+		title = "?  혈원 목록",
 		description = "",
 		color=0x00ff00
 		)
 		if len(manager_list) == 0:
-			embed.add_field(name = f"**🤴 총무**",value = f"**```cs\n등록된 총무가 없습니다.```**")
+			embed.add_field(name = f"**? 총무**",value = f"**```cs\n등록된 총무가 없습니다.```**")
 		else:
-			embed.add_field(name = f"**🤴 총무**",value = f"**```cs\n{manager_list}```**")
+			embed.add_field(name = f"**? 총무**",value = f"**```cs\n{manager_list}```**")
 		if len(member_list) == 0:
-			embed.add_field(name = f"**🧑 혈원**",value = f"**```cs\n등록된 혈원이 없습니다.```**", inline = False)
+			embed.add_field(name = f"**? 혈원**",value = f"**```cs\n등록된 혈원이 없습니다.```**", inline = False)
 		else:
-			embed.add_field(name = f"**🧑 혈원**",value = f"**```cs\n{member_list}```**", inline = False)
-		embed.add_field(name = f"**👤 혈원수**",value = f"**```fix\n{len(sorted_member_document)}```**")
-		embed.add_field(name = f"**🏦 잔고**",value = f"**```fix\n{total_account}```**")
-		embed.add_field(name = f"**💰 혈비**",value = f"**```fix\n{remain_guild_money}```**")
-		#embed.set_footer(text = f"👑 표시는 총무!")
+			embed.add_field(name = f"**? 혈원**",value = f"**```cs\n{member_list}```**", inline = False)
+		embed.add_field(name = f"**? 혈원수**",value = f"**```fix\n{len(sorted_member_document)}```**")
+		embed.add_field(name = f"**? 잔고**",value = f"**```fix\n{total_account}```**")
+		embed.add_field(name = f"**? 혈비**",value = f"**```fix\n{remain_guild_money}```**")
+		#embed.set_footer(text = f"? 표시는 총무!")
 		return await ctx.send(embed = embed)
 
 	################ 혈원아이디 등록 ################ 
@@ -2109,24 +2034,24 @@ class memberCog(commands.Cog):
 				if jungsan_data["toggle"] == args:
 					if jungsan_data['each_price'] != 0 and args in jungsan_data['before_jungsan_ID']:
 						total_remain_money += jungsan_data['each_price']
-						remain_jungsan_info += f"**[ 순번 : {jungsan_data['_id']}]** 루팅  💰 {jungsan_data['each_price']}\n"
+						remain_jungsan_info += f"**[ 순번 : {jungsan_data['_id']}]** 루팅  ? {jungsan_data['each_price']}\n"
 					else:
 						remain_jungsan_info += f"**[ 순번 : {jungsan_data['_id']}]** 루팅\n"
 				else: 
 					if jungsan_data['each_price'] != 0:
 						total_remain_money += jungsan_data['each_price']
-						remain_jungsan_info += f"**[ 순번 : {jungsan_data['_id']}]** 참여 💰 {jungsan_data['each_price']}\n"
+						remain_jungsan_info += f"**[ 순번 : {jungsan_data['_id']}]** 참여 ? {jungsan_data['each_price']}\n"
 					else:
 						remain_jungsan_info += f"**[ 순번 : {jungsan_data['_id']}]** 참여\n"
 						
 
 			await ctx.send(f"```잔여 루팅/정산 목록이 있어 혈원을 삭제할 수 없습니다.```")
 			embed = discord.Embed(
-				title = "📜 잔여 루팅/정산 목록",
+				title = "? 잔여 루팅/정산 목록",
 				description = remain_jungsan_info,
 				color=0x00ff00
 				)
-			embed.add_field(name = "\u200b", value = f"잔여 정산 금액 : 💰 {total_remain_money}")
+			embed.add_field(name = "\u200b", value = f"잔여 정산 금액 : ? {total_remain_money}")
 			return await ctx.send(embed = embed)
 
 		result = self.member_db.delete_one({"game_ID":args})
@@ -2183,7 +2108,7 @@ class manageCog(commands.Cog):
 					try:
 						return await ctx.send(embed = embed)
 					except Exception:
-						embed.add_field(name = "🚫  이미지 링크 확인 필요  🚫", value = f"```저장된 이미지가 삭제됐습니다.```")
+						embed.add_field(name = "?  이미지 링크 확인 필요  ?", value = f"```저장된 이미지가 삭제됐습니다.```")
 						embed.set_image(url = "")
 						result1 = self.jungsan_db.update_one({"_id":input_distribute_all_finish[1]}, {"$set":{"image_url":""}}, upsert = True)
 						if result1.raw_result["nModified"] < 1 and "upserted" not in result1.raw_result:
@@ -2221,11 +2146,11 @@ class manageCog(commands.Cog):
 			toggle_list.remove("혈비")
 
 		embed = discord.Embed(
-				title = f"📜 [{member_data['game_ID']}]님 정산 내역",
+				title = f"? [{member_data['game_ID']}]님 정산 내역",
 				description = "",
 				color=0x00ff00
 				)
-		embed.add_field(name = f"🏦 **[ 은행 ]**", value = f"**```fix\n {member_data['account']}```**")
+		embed.add_field(name = f"? **[ 은행 ]**", value = f"**```fix\n {member_data['account']}```**")
 		for game_id in toggle_list:
 			each_price : int = 0
 			info_cnt : int = 0
@@ -2241,13 +2166,13 @@ class manageCog(commands.Cog):
 					else:
 						each_price += jungsan_data['each_price']
 						if jungsan_data["ladder_check"]:
-							tmp_info[info_cnt] += f"+[순번:{jungsan_data['_id']}]|{jungsan_data['getdate'].strftime('%y-%m-%d')}|{jungsan_data['boss']}|{jungsan_data['item']}|🌟|💰{jungsan_data['each_price']}\n"
+							tmp_info[info_cnt] += f"+[순번:{jungsan_data['_id']}]|{jungsan_data['getdate'].strftime('%y-%m-%d')}|{jungsan_data['boss']}|{jungsan_data['item']}|?|?{jungsan_data['each_price']}\n"
 						else:
-							tmp_info[info_cnt] += f"+[순번:{jungsan_data['_id']}]|{jungsan_data['getdate'].strftime('%y-%m-%d')}|{jungsan_data['boss']}|{jungsan_data['item']}|💰{jungsan_data['each_price']}\n"
+							tmp_info[info_cnt] += f"+[순번:{jungsan_data['_id']}]|{jungsan_data['getdate'].strftime('%y-%m-%d')}|{jungsan_data['boss']}|{jungsan_data['item']}|?{jungsan_data['each_price']}\n"
 			total_money += each_price
 			if len(tmp_info) > 1:
 				embed.add_field(
-					name = f"[ {game_id} ]님께 받을 내역 (총 💰 {each_price} )",
+					name = f"[ {game_id} ]님께 받을 내역 (총 ? {each_price} )",
 					value = f"```diff\n{tmp_info[0]}```",
 					inline = False
 					)
@@ -2259,7 +2184,7 @@ class manageCog(commands.Cog):
 						)
 			else:
 				embed.add_field(
-						name = f"[ {game_id} ]님께 받을 내역 (총 💰 {each_price} )",
+						name = f"[ {game_id} ]님께 받을 내역 (총 ? {each_price} )",
 						value = f"```diff\n{tmp_info[0]}```",
 						inline = False
 						)
@@ -2268,7 +2193,7 @@ class manageCog(commands.Cog):
 			return
 		else:
 			embed1 = discord.Embed(
-				title = f"총 수령 예정 금액 : 💰 {total_money}",
+				title = f"총 수령 예정 금액 : ? {total_money}",
 				description = "",
 				color=0x00ff00
 				)
@@ -2318,7 +2243,7 @@ class manageCog(commands.Cog):
 			gulid_money_insert_check = False
 			loot_member_data = self.member_db.find_one({"game_ID":input_regist_data[2]})
 			if not loot_member_data:
-				wrong_input_id.append(f"💥{input_regist_data[2]}")
+				wrong_input_id.append(f"?{input_regist_data[2]}")
 				#return await ctx.send(f"```루팅자 [{input_regist_data[2]}](은)는 혈원으로 등록되지 않은 아이디 입니다.```")
 
 		check_member_data = list(self.member_db.find())
@@ -2373,7 +2298,7 @@ class manageCog(commands.Cog):
 		# "image_url":이미지 url
 
 		embed = discord.Embed(
-				title = "📜 등록 정보",
+				title = "? 등록 정보",
 				description = "",
 				color=0x00ff00
 				)
@@ -2384,9 +2309,9 @@ class manageCog(commands.Cog):
 		embed.add_field(name = "[ 참여자 ]", value = f"```{', '.join(insert_data['before_jungsan_ID'])}```")
 		await ctx.send(embed = embed)
 
-		data_regist_warning_message = await ctx.send(f"**입력하신 등록 내역을 확인해 보세요!**\n**등록 : ⭕ 취소: ❌**\n({basicSetting_jungsan[5]}초 동안 입력이 없을시 등록이 취소됩니다.)", tts=False)
+		data_regist_warning_message = await ctx.send(f"**입력하신 등록 내역을 확인해 보세요!**\n**등록 : ? 취소: ?**\n({basicSetting_jungsan[5]}초 동안 입력이 없을시 등록이 취소됩니다.)", tts=False)
 
-		emoji_list : list = ["⭕", "❌"]
+		emoji_list : list = ["?", "?"]
 
 		for emoji in emoji_list:
 			await data_regist_warning_message.add_reaction(emoji)
@@ -2401,13 +2326,13 @@ class manageCog(commands.Cog):
 				await data_regist_warning_message.remove_reaction(emoji, self.bot.user)
 			return await ctx.send(f"시간이 초과됐습니다. **등록**를 취소합니다!")
 
-		if str(reaction) == "⭕":
+		if str(reaction) == "?":
 			self.index_value += 1
 			result = self.jungsan_db.update_one({"_id":self.index_value}, {"$set":insert_data}, upsert = True)
 			if result.raw_result["nModified"] < 1 and "upserted" not in result.raw_result:
 				return await ctx.send(f"{ctx.author.mention}, 정산 등록 실패.") 
 
-			return await ctx.send(f"📥 **[ 순번 : {self.index_value} ]** 정산 등록 완료! 📥")
+			return await ctx.send(f"? **[ 순번 : {self.index_value} ]** 정산 등록 완료! ?")
 		else:
 			return await ctx.send(f"**등록**이 취소되었습니다.\n")
 
@@ -2454,7 +2379,7 @@ class manageCog(commands.Cog):
 					try:
 						return await ctx.send(embed = embed)
 					except Exception:
-						embed.add_field(name = "🚫  이미지 링크 확인 필요  🚫", value = f"```저장된 이미지가 삭제됐습니다.```")
+						embed.add_field(name = "?  이미지 링크 확인 필요  ?", value = f"```저장된 이미지가 삭제됐습니다.```")
 						embed.set_image(url = "")
 						result1 = self.jungsan_db.update_one({"_id":input_distribute_all_finish[1]}, {"$set":{"image_url":""}}, upsert = True)
 						if result1.raw_result["nModified"] < 1 and "upserted" not in result1.raw_result:
@@ -2496,7 +2421,7 @@ class manageCog(commands.Cog):
 		detail_info	: str = ""
 		
 		embed = discord.Embed(
-					title = f"📜 [{member_data['game_ID']}]님 등록 내역",
+					title = f"? [{member_data['game_ID']}]님 등록 내역",
 					description = "",
 					color=0x00ff00
 					)
@@ -2525,11 +2450,11 @@ class manageCog(commands.Cog):
 				detail_info = f"~~```fix\n[ 은행저축 ]```~~"
 			else:
 				if jungsan_data['itemstatus'] == "분배중":
-					detail_title_info = f"[ 순번 : {jungsan_data['_id']} ] | {jungsan_data['getdate'].strftime('%y-%m-%d')} | {jungsan_data['boss']} | {jungsan_data['item']} | {jungsan_data['toggle']} | {jungsan_data['itemstatus']} : 1인당 💰{jungsan_data['each_price']}\n[ 등록자 : {jungsan_data['regist']} ]"
+					detail_title_info = f"[ 순번 : {jungsan_data['_id']} ] | {jungsan_data['getdate'].strftime('%y-%m-%d')} | {jungsan_data['boss']} | {jungsan_data['item']} | {jungsan_data['toggle']} | {jungsan_data['itemstatus']} : 1인당 ?{jungsan_data['each_price']}\n[ 등록자 : {jungsan_data['regist']} ]"
 					if visual_flag == 0:
 						detail_info = f"```fix\n[ 분배중 ] : {len(jungsan_data['before_jungsan_ID'])}명   [ 분배완료 ] : {len(jungsan_data['after_jungsan_ID'])}명```"
 					else:
-						detail_info = f"```diff\n+ 분 배 중 : {len(jungsan_data['before_jungsan_ID'])}명 (💰{len(jungsan_data['before_jungsan_ID'])*jungsan_data['each_price']})\n{', '.join(jungsan_data['before_jungsan_ID'])}\n- 분배완료 : {len(jungsan_data['after_jungsan_ID'])}명  (💰{len(jungsan_data['after_jungsan_ID'])*jungsan_data['each_price']})\n{', '.join(jungsan_data['after_jungsan_ID'])}```"
+						detail_info = f"```diff\n+ 분 배 중 : {len(jungsan_data['before_jungsan_ID'])}명 (?{len(jungsan_data['before_jungsan_ID'])*jungsan_data['each_price']})\n{', '.join(jungsan_data['before_jungsan_ID'])}\n- 분배완료 : {len(jungsan_data['after_jungsan_ID'])}명  (?{len(jungsan_data['after_jungsan_ID'])*jungsan_data['each_price']})\n{', '.join(jungsan_data['after_jungsan_ID'])}```"
 					total_distribute_money += len(jungsan_data['before_jungsan_ID'])*int(jungsan_data['each_price'])
 				elif jungsan_data['itemstatus'] == "미판매":
 					detail_title_info = f"[ 순번 : {jungsan_data['_id']} ] | {jungsan_data['getdate'].strftime('%y-%m-%d')} | {jungsan_data['boss']} | {jungsan_data['item']} | {jungsan_data['toggle']} | {jungsan_data['itemstatus']}\n[ 등록자 : {jungsan_data['regist']} ]"
@@ -2538,7 +2463,7 @@ class manageCog(commands.Cog):
 					else:
 						detail_info = f"```ini\n[ 참여자 ] : {len(jungsan_data['before_jungsan_ID'])}명\n{', '.join(jungsan_data['before_jungsan_ID'])}```"
 				else:
-					detail_title_info = f"[ 순번 : {jungsan_data['_id']} ] | {jungsan_data['getdate'].strftime('%y-%m-%d')} | {jungsan_data['boss']} | {jungsan_data['item']} | {jungsan_data['toggle']} | {jungsan_data['itemstatus']} | 💰~~{jungsan_data['price']}~~\n[ 등록자 : {jungsan_data['regist']} ]"
+					detail_title_info = f"[ 순번 : {jungsan_data['_id']} ] | {jungsan_data['getdate'].strftime('%y-%m-%d')} | {jungsan_data['boss']} | {jungsan_data['item']} | {jungsan_data['toggle']} | {jungsan_data['itemstatus']} | ?~~{jungsan_data['price']}~~\n[ 등록자 : {jungsan_data['regist']} ]"
 					if visual_flag == 0:
 						detail_info = f"~~```yaml\n[ 분배완료 ] : {len(jungsan_data['after_jungsan_ID'])}명```~~"
 					else:
@@ -2546,10 +2471,10 @@ class manageCog(commands.Cog):
 
 			if 'image_url' in jungsan_data.keys():
 				if jungsan_data['image_url'] != "":
-					detail_title_info += " 📸"
+					detail_title_info += " ?"
 			
 			if jungsan_data['ladder_check']:
-				detail_title_info += " 🌟"
+				detail_title_info += " ?"
 
 			embed_list[embed_cnt].add_field(name = detail_title_info,
 							value = detail_info,
@@ -2563,7 +2488,7 @@ class manageCog(commands.Cog):
 			await ctx.send(embed = embed)
 
 		embed1 = discord.Embed(
-			title = f"총 정산 금액 : 💰 {str(total_distribute_money)}",
+			title = f"총 정산 금액 : ? {str(total_distribute_money)}",
 			description = "",
 			color=0x00ff00
 			)
@@ -2611,7 +2536,7 @@ class manageCog(commands.Cog):
 					try:
 						return await ctx.send(embed = embed)
 					except Exception:
-						embed.add_field(name = "🚫  이미지 링크 확인 필요  🚫", value = f"```저장된 이미지가 삭제됐습니다.```")
+						embed.add_field(name = "?  이미지 링크 확인 필요  ?", value = f"```저장된 이미지가 삭제됐습니다.```")
 						embed.set_image(url = "")
 						result1 = self.jungsan_db.update_one({"_id":input_distribute_all_finish[1]}, {"$set":{"image_url":""}}, upsert = True)
 						if result1.raw_result["nModified"] < 1 and "upserted" not in result1.raw_result:
@@ -2649,7 +2574,7 @@ class manageCog(commands.Cog):
 		detail_info	: str = ""
 		
 		embed = discord.Embed(
-					title = f"📜 [{member_data['game_ID']}]님 등록 내역",
+					title = f"? [{member_data['game_ID']}]님 등록 내역",
 					description = "",
 					color=0x00ff00
 					)
@@ -2678,11 +2603,11 @@ class manageCog(commands.Cog):
 				detail_info = f"~~```fix\n[ 은행저축 ]```~~"
 			else:
 				if jungsan_data['itemstatus'] == "분배중":
-					detail_title_info = f"[ 순번 : {jungsan_data['_id']} ] | {jungsan_data['getdate'].strftime('%y-%m-%d')} | {jungsan_data['boss']} | {jungsan_data['item']} | {jungsan_data['toggle']} | {jungsan_data['itemstatus']} : 1인당 💰{jungsan_data['each_price']}"
+					detail_title_info = f"[ 순번 : {jungsan_data['_id']} ] | {jungsan_data['getdate'].strftime('%y-%m-%d')} | {jungsan_data['boss']} | {jungsan_data['item']} | {jungsan_data['toggle']} | {jungsan_data['itemstatus']} : 1인당 ?{jungsan_data['each_price']}"
 					if visual_flag == 0:
 						detail_info = f"```fix\n[ 분배중 ] : {len(jungsan_data['before_jungsan_ID'])}명   [ 분배완료 ] : {len(jungsan_data['after_jungsan_ID'])}명```"
 					else:
-						detail_info = f"```diff\n+ 분 배 중 : {len(jungsan_data['before_jungsan_ID'])}명 (💰{len(jungsan_data['before_jungsan_ID'])*jungsan_data['each_price']})\n{', '.join(jungsan_data['before_jungsan_ID'])}\n- 분배완료 : {len(jungsan_data['after_jungsan_ID'])}명  (💰{len(jungsan_data['after_jungsan_ID'])*jungsan_data['each_price']})\n{', '.join(jungsan_data['after_jungsan_ID'])}```"
+						detail_info = f"```diff\n+ 분 배 중 : {len(jungsan_data['before_jungsan_ID'])}명 (?{len(jungsan_data['before_jungsan_ID'])*jungsan_data['each_price']})\n{', '.join(jungsan_data['before_jungsan_ID'])}\n- 분배완료 : {len(jungsan_data['after_jungsan_ID'])}명  (?{len(jungsan_data['after_jungsan_ID'])*jungsan_data['each_price']})\n{', '.join(jungsan_data['after_jungsan_ID'])}```"
 					total_distribute_money += len(jungsan_data['before_jungsan_ID'])*int(jungsan_data['each_price'])
 				elif jungsan_data['itemstatus'] == "미판매":
 					detail_title_info = f"[ 순번 : {jungsan_data['_id']} ] | {jungsan_data['getdate'].strftime('%y-%m-%d')} | {jungsan_data['boss']} | {jungsan_data['item']} | {jungsan_data['toggle']} | {jungsan_data['itemstatus']}"
@@ -2691,7 +2616,7 @@ class manageCog(commands.Cog):
 					else:
 						detail_info = f"```ini\n[ 참여자 ] : {len(jungsan_data['before_jungsan_ID'])}명\n{', '.join(jungsan_data['before_jungsan_ID'])}```"
 				else:
-					detail_title_info = f"[ 순번 : {jungsan_data['_id']} ] | {jungsan_data['getdate'].strftime('%y-%m-%d')} | {jungsan_data['boss']} | {jungsan_data['item']} | {jungsan_data['toggle']} | {jungsan_data['itemstatus']} | 💰~~{jungsan_data['price']}~~"
+					detail_title_info = f"[ 순번 : {jungsan_data['_id']} ] | {jungsan_data['getdate'].strftime('%y-%m-%d')} | {jungsan_data['boss']} | {jungsan_data['item']} | {jungsan_data['toggle']} | {jungsan_data['itemstatus']} | ?~~{jungsan_data['price']}~~"
 					if visual_flag == 0:
 						detail_info = f"~~```yaml\n[ 분배완료 ] : {len(jungsan_data['after_jungsan_ID'])}명```~~"
 					else:
@@ -2699,10 +2624,10 @@ class manageCog(commands.Cog):
 
 			if 'image_url' in jungsan_data.keys():
 				if jungsan_data['image_url'] != "":
-					detail_title_info += " 📸"
+					detail_title_info += " ?"
 			
 			if jungsan_data['ladder_check']:
-				detail_title_info += " 🌟"
+				detail_title_info += " ?"
 
 			embed_list[embed_cnt].add_field(name = detail_title_info,
 							value = detail_info,
@@ -2716,7 +2641,7 @@ class manageCog(commands.Cog):
 			await ctx.send(embed = embed)
 
 		embed1 = discord.Embed(
-			title = f"총 정산 금액 : 💰 {str(total_distribute_money)}",
+			title = f"총 정산 금액 : ? {str(total_distribute_money)}",
 			description = "",
 			color=0x00ff00
 			)
@@ -2763,7 +2688,7 @@ class manageCog(commands.Cog):
 			gulid_money_insert_check = False
 			loot_member_data = self.member_db.find_one({"game_ID":input_regist_data[2]})
 			if not loot_member_data:
-				wrong_input_id.append(f"💥{input_regist_data[2]}")
+				wrong_input_id.append(f"?{input_regist_data[2]}")
 				#return await ctx.send(f"```루팅자 [{input_regist_data[2]}](은)는 혈원으로 등록되지 않은 아이디 입니다.```")
 
 		check_member_data = list(self.member_db.find())
@@ -2791,7 +2716,7 @@ class manageCog(commands.Cog):
 		insert_data["gulid_money_insert"] = gulid_money_insert_check
 		
 		embed = discord.Embed(
-				title = "📜 수정 정보",
+				title = "? 수정 정보",
 				description = "",
 				color=0x00ff00
 				)
@@ -2816,9 +2741,9 @@ class manageCog(commands.Cog):
 		embed.set_footer(text = f"{insert_data['modifydate'].strftime('%y-%m-%d %H:%M:%S')} 수정!")
 		await ctx.send(embed = embed)
 
-		data_regist_warning_message = await ctx.send(f"**입력하신 수정 내역을 확인해 보세요!**\n**수정 : ⭕ 취소: ❌**\n({basicSetting_jungsan[5]}초 동안 입력이 없을시 수정이 취소됩니다.)", tts=False)
+		data_regist_warning_message = await ctx.send(f"**입력하신 수정 내역을 확인해 보세요!**\n**수정 : ? 취소: ?**\n({basicSetting_jungsan[5]}초 동안 입력이 없을시 수정이 취소됩니다.)", tts=False)
 
-		emoji_list : list = ["⭕", "❌"]
+		emoji_list : list = ["?", "?"]
 		for emoji in emoji_list:
 			await data_regist_warning_message.add_reaction(emoji)
 
@@ -2832,12 +2757,12 @@ class manageCog(commands.Cog):
 				await data_regist_warning_message.remove_reaction(emoji, self.bot.user)
 			return await ctx.send(f"시간이 초과됐습니다. **수정**을 취소합니다!")
 
-		if str(reaction) == "⭕":
+		if str(reaction) == "?":
 			result = self.jungsan_db.update_one({"_id":jungsan_data['_id']}, {"$set":insert_data}, upsert = False)
 			if result.raw_result["nModified"] < 1 and "upserted" not in result.raw_result:
 				return await ctx.send(f"{ctx.author.mention}, 정산 등록 내역 수정 실패.") 
 
-			return await ctx.send(f"📥 정산 등록 내역 수정 완료! 📥")
+			return await ctx.send(f"? 정산 등록 내역 수정 완료! ?")
 		else:
 			return await ctx.send(f"**수정**이 취소되었습니다.\n")
 
@@ -2861,7 +2786,7 @@ class manageCog(commands.Cog):
 			return await ctx.send(f"{ctx.author.mention}님! 등록하신 정산 내역이 **[ 분배중 ]**이거나 없습니다. **[ {commandSetting_jungsan[13][0]} ]** 명령을 통해 확인해주세요.\n※정산 등록 내역 삭제는 **[ 분배상태 ]**가 **[ 미판매/분배완료 ]** 인 등록건만 수정 가능합니다!")
 		
 		embed = discord.Embed(
-					title = "⚠️☠️⚠️ 삭제 내역 ⚠️☠️⚠️",
+					title = "?????? 삭제 내역 ??????",
 					description = "",
 					color=0x00ff00
 					)
@@ -2875,9 +2800,9 @@ class manageCog(commands.Cog):
 		embed.add_field(name = "[ 참여자 ]", value = f"```{', '.join(jungsan_data['before_jungsan_ID']+jungsan_data['after_jungsan_ID'])}```")
 		await ctx.send(embed = embed)
 		
-		delete_warning_message = await ctx.send(f"**등록 내역을 삭제하시면 다시는 복구할 수 없습니다. 정말로 삭제하시겠습니까?**\n**삭제 : ⭕ 취소: ❌**\n({basicSetting_jungsan[5]}초 동안 입력이 없을시 삭제가 취소됩니다.)", tts=False)
+		delete_warning_message = await ctx.send(f"**등록 내역을 삭제하시면 다시는 복구할 수 없습니다. 정말로 삭제하시겠습니까?**\n**삭제 : ? 취소: ?**\n({basicSetting_jungsan[5]}초 동안 입력이 없을시 삭제가 취소됩니다.)", tts=False)
 
-		emoji_list : list = ["⭕", "❌"]
+		emoji_list : list = ["?", "?"]
 		for emoji in emoji_list:
 			await delete_warning_message.add_reaction(emoji)
 
@@ -2891,9 +2816,9 @@ class manageCog(commands.Cog):
 				await data_regist_warning_message.remove_reaction(emoji, self.bot.user)
 			return await ctx.send(f"시간이 초과됐습니다. **삭제**를 취소합니다!")
 
-		if str(reaction) == "⭕":
+		if str(reaction) == "?":
 			self.jungsan_db.delete_one({"_id":int(args)})
-			return await ctx.send(f"☠️ 정산 내역 삭제 완료! ☠️")
+			return await ctx.send(f"?? 정산 내역 삭제 완료! ??")
 		else:
 			return await ctx.send(f"**삭제**가 취소되었습니다.\n")
 
@@ -2939,7 +2864,7 @@ class manageCog(commands.Cog):
 					try:
 						return await ctx.send(embed = embed)
 					except Exception:
-						embed.add_field(name = "🚫  이미지 링크 확인 필요  🚫", value = f"```저장된 이미지가 삭제됐습니다.```")
+						embed.add_field(name = "?  이미지 링크 확인 필요  ?", value = f"```저장된 이미지가 삭제됐습니다.```")
 						embed.set_image(url = "")
 						result1 = self.jungsan_db.update_one({"_id":input_distribute_all_finish[1]}, {"$set":{"image_url":""}}, upsert = True)
 						if result1.raw_result["nModified"] < 1 and "upserted" not in result1.raw_result:
@@ -2977,7 +2902,7 @@ class manageCog(commands.Cog):
 		detail_info	: str = ""
 		
 		embed = discord.Embed(
-					title = f"📜 [{member_data['game_ID']}]님 루팅 내역",
+					title = f"? [{member_data['game_ID']}]님 루팅 내역",
 					description = "",
 					color=0x00ff00
 					)
@@ -3006,11 +2931,11 @@ class manageCog(commands.Cog):
 				detail_info = f"```fix\n[ 은행저축 ]```"
 			else:			
 				if jungsan_data['itemstatus'] == "분배중":
-					detail_title_info = f"[ 순번 : {jungsan_data['_id']} ] | {jungsan_data['getdate'].strftime('%y-%m-%d')} | {jungsan_data['boss']} | {jungsan_data['item']} | {jungsan_data['toggle']} | {jungsan_data['itemstatus']} : 1인당 💰{jungsan_data['each_price']}"
+					detail_title_info = f"[ 순번 : {jungsan_data['_id']} ] | {jungsan_data['getdate'].strftime('%y-%m-%d')} | {jungsan_data['boss']} | {jungsan_data['item']} | {jungsan_data['toggle']} | {jungsan_data['itemstatus']} : 1인당 ?{jungsan_data['each_price']}"
 					if visual_flag == 0:
 						detail_info = f"```fix\n[ 분배중 ] : {len(jungsan_data['before_jungsan_ID'])}명   [ 분배완료 ] : {len(jungsan_data['after_jungsan_ID'])}명```"
 					else:
-						detail_info = f"```diff\n+ 분 배 중 : {len(jungsan_data['before_jungsan_ID'])}명 (💰{len(jungsan_data['before_jungsan_ID'])*jungsan_data['each_price']})\n{', '.join(jungsan_data['before_jungsan_ID'])}\n- 분배완료 : {len(jungsan_data['after_jungsan_ID'])}명  (💰{len(jungsan_data['after_jungsan_ID'])*jungsan_data['each_price']})\n{', '.join(jungsan_data['after_jungsan_ID'])}```"
+						detail_info = f"```diff\n+ 분 배 중 : {len(jungsan_data['before_jungsan_ID'])}명 (?{len(jungsan_data['before_jungsan_ID'])*jungsan_data['each_price']})\n{', '.join(jungsan_data['before_jungsan_ID'])}\n- 분배완료 : {len(jungsan_data['after_jungsan_ID'])}명  (?{len(jungsan_data['after_jungsan_ID'])*jungsan_data['each_price']})\n{', '.join(jungsan_data['after_jungsan_ID'])}```"
 					total_distribute_money += len(jungsan_data['before_jungsan_ID'])*int(jungsan_data['each_price'])
 				elif jungsan_data['itemstatus'] == "미판매":
 					detail_title_info = f"[ 순번 : {jungsan_data['_id']} ] | {jungsan_data['getdate'].strftime('%y-%m-%d')} | {jungsan_data['boss']} | {jungsan_data['item']} | {jungsan_data['toggle']} | {jungsan_data['itemstatus']}"
@@ -3019,7 +2944,7 @@ class manageCog(commands.Cog):
 					else:
 						detail_info = f"```ini\n[ 참여자 ] : {len(jungsan_data['before_jungsan_ID'])}명\n{', '.join(jungsan_data['before_jungsan_ID'])}```"
 				else:
-					detail_title_info = f"[ 순번 : {jungsan_data['_id']} ] | {jungsan_data['getdate'].strftime('%y-%m-%d')} | {jungsan_data['boss']} | {jungsan_data['item']} | {jungsan_data['toggle']} | {jungsan_data['itemstatus']} | 💰~~{jungsan_data['price']}~~"
+					detail_title_info = f"[ 순번 : {jungsan_data['_id']} ] | {jungsan_data['getdate'].strftime('%y-%m-%d')} | {jungsan_data['boss']} | {jungsan_data['item']} | {jungsan_data['toggle']} | {jungsan_data['itemstatus']} | ?~~{jungsan_data['price']}~~"
 					if visual_flag == 0:
 						detail_info = f"~~```yaml\n[ 분배완료 ] : {len(jungsan_data['after_jungsan_ID'])}명```~~"
 					else:
@@ -3027,10 +2952,10 @@ class manageCog(commands.Cog):
 
 			if 'image_url' in jungsan_data.keys():
 				if jungsan_data['image_url'] != "":
-					detail_title_info += " 📸"
+					detail_title_info += " ?"
 			
 			if jungsan_data['ladder_check']:
-				detail_title_info += " 🌟"
+				detail_title_info += " ?"
 
 			embed_list[embed_cnt].add_field(name = detail_title_info,
 							value = detail_info,
@@ -3044,7 +2969,7 @@ class manageCog(commands.Cog):
 			await ctx.send(embed = embed)
 
 		embed1 = discord.Embed(
-			title = f"총 정산 금액 : 💰 {str(total_distribute_money)}",
+			title = f"총 정산 금액 : ? {str(total_distribute_money)}",
 			description = "",
 			color=0x00ff00
 			)
@@ -3091,7 +3016,7 @@ class manageCog(commands.Cog):
 			gulid_money_insert_check = False
 			loot_member_data = self.member_db.find_one({"game_ID":input_regist_data[2]})
 			if not loot_member_data:
-				wrong_input_id.append(f"💥{input_regist_data[2]}")
+				wrong_input_id.append(f"?{input_regist_data[2]}")
 				#return await ctx.send(f"```루팅자 [{input_regist_data[2]}](은)는 혈원으로 등록되지 않은 아이디 입니다.```")
 
 		check_member_data = list(self.member_db.find())
@@ -3119,7 +3044,7 @@ class manageCog(commands.Cog):
 		insert_data["gulid_money_insert"] = gulid_money_insert_check
 		
 		embed = discord.Embed(
-				title = "📜 수정 정보",
+				title = "? 수정 정보",
 				description = "",
 				color=0x00ff00
 				)
@@ -3144,9 +3069,9 @@ class manageCog(commands.Cog):
 		embed.set_footer(text = f"{insert_data['modifydate'].strftime('%y-%m-%d %H:%M:%S')} 수정!")
 		await ctx.send(embed = embed)
 
-		data_regist_warning_message = await ctx.send(f"**입력하신 수정 내역을 확인해 보세요!**\n**수정 : ⭕ 취소: ❌**\n({basicSetting_jungsan[5]}초 동안 입력이 없을시 수정이 취소됩니다.)", tts=False)
+		data_regist_warning_message = await ctx.send(f"**입력하신 수정 내역을 확인해 보세요!**\n**수정 : ? 취소: ?**\n({basicSetting_jungsan[5]}초 동안 입력이 없을시 수정이 취소됩니다.)", tts=False)
 
-		emoji_list : list = ["⭕", "❌"]
+		emoji_list : list = ["?", "?"]
 		for emoji in emoji_list:
 			await data_regist_warning_message.add_reaction(emoji)
 
@@ -3160,12 +3085,12 @@ class manageCog(commands.Cog):
 				await data_regist_warning_message.remove_reaction(emoji, self.bot.user)
 			return await ctx.send(f"시간이 초과됐습니다. **수정**을 취소합니다!")
 
-		if str(reaction) == "⭕":
+		if str(reaction) == "?":
 			result = self.jungsan_db.update_one({"_id":jungsan_data['_id']}, {"$set":insert_data}, upsert = True)
 			if result.raw_result["nModified"] < 1 and "upserted" not in result.raw_result:
 				return await ctx.send(f"{ctx.author.mention}, 정산 내역 수정 실패.") 
 
-			return await ctx.send(f"📥 정산 내역 수정 완료! 📥")
+			return await ctx.send(f"? 정산 내역 수정 완료! ?")
 		else:
 			return await ctx.send(f"**수정**이 취소되었습니다.\n")
 
@@ -3189,7 +3114,7 @@ class manageCog(commands.Cog):
 			return await ctx.send(f"{ctx.author.mention}님! 등록하신 정산 내역이 **[ 분배중 ]**이거나 없습니다. **[ {commandSetting_jungsan[16][0]} ]** 명령을 통해 확인해주세요.\n※정산 등록 내역 삭제는 **[ 분배상태 ]**가 **[ 미판매/분배완료 ]** 인 등록건만 수정 가능합니다!")
 		
 		embed = discord.Embed(
-					title = "⚠️☠️⚠️ 삭제 내역 ⚠️☠️⚠️",
+					title = "?????? 삭제 내역 ??????",
 					description = "",
 					color=0x00ff00
 					)
@@ -3203,9 +3128,9 @@ class manageCog(commands.Cog):
 		embed.add_field(name = "[ 참여자 ]", value = f"```{', '.join(jungsan_data['before_jungsan_ID']+jungsan_data['after_jungsan_ID'])}```")
 		await ctx.send(embed = embed)
 		
-		delete_warning_message = await ctx.send(f"**정산 내역을 삭제하시면 다시는 복구할 수 없습니다. 정말로 삭제하시겠습니까?**\n**삭제 : ⭕ 취소: ❌**\n({basicSetting_jungsan[5]}초 동안 입력이 없을시 삭제가 취소됩니다.)", tts=False)
+		delete_warning_message = await ctx.send(f"**정산 내역을 삭제하시면 다시는 복구할 수 없습니다. 정말로 삭제하시겠습니까?**\n**삭제 : ? 취소: ?**\n({basicSetting_jungsan[5]}초 동안 입력이 없을시 삭제가 취소됩니다.)", tts=False)
 
-		emoji_list : list = ["⭕", "❌"]
+		emoji_list : list = ["?", "?"]
 		for emoji in emoji_list:
 			await delete_warning_message.add_reaction(emoji)
 
@@ -3219,9 +3144,9 @@ class manageCog(commands.Cog):
 				await data_regist_warning_message.remove_reaction(emoji, self.bot.user)
 			return await ctx.send(f"시간이 초과됐습니다. **삭제**를 취소합니다!")
 
-		if str(reaction) == "⭕":
+		if str(reaction) == "?":
 			self.jungsan_db.delete_one({"_id":int(args)})
-			return await ctx.send(f"☠️ 정산 내역 삭제 완료! ☠️")
+			return await ctx.send(f"?? 정산 내역 삭제 완료! ??")
 		else:
 			return await ctx.send(f"**삭제**가 취소되었습니다.\n")
 
@@ -3260,7 +3185,7 @@ class manageCog(commands.Cog):
 		insert_data["modifydate"] = input_time
 		
 		embed = discord.Embed(
-				title = "📜 수정 정보",
+				title = "? 수정 정보",
 				description = "",
 				color=0x00ff00
 				)
@@ -3275,9 +3200,9 @@ class manageCog(commands.Cog):
 		embed.set_footer(text = f"{insert_data['modifydate'].strftime('%y-%m-%d %H:%M:%S')} 수정!")
 		await ctx.send(embed = embed)
 
-		data_regist_warning_message = await ctx.send(f"**입력하신 수정 내역을 확인해 보세요!**\n**수정 : ⭕ 취소: ❌**\n({basicSetting_jungsan[5]}초 동안 입력이 없을시 수정이 취소됩니다.)", tts=False)
+		data_regist_warning_message = await ctx.send(f"**입력하신 수정 내역을 확인해 보세요!**\n**수정 : ? 취소: ?**\n({basicSetting_jungsan[5]}초 동안 입력이 없을시 수정이 취소됩니다.)", tts=False)
 
-		emoji_list : list = ["⭕", "❌"]
+		emoji_list : list = ["?", "?"]
 		for emoji in emoji_list:
 			await data_regist_warning_message.add_reaction(emoji)
 
@@ -3291,12 +3216,12 @@ class manageCog(commands.Cog):
 				await data_regist_warning_message.remove_reaction(emoji, self.bot.user)
 			return await ctx.send(f"시간이 초과됐습니다. **수정**을 취소합니다!")
 
-		if str(reaction) == "⭕":
+		if str(reaction) == "?":
 			result = self.jungsan_db.update_one({"_id":jungsan_data['_id']}, {"$set":insert_data}, upsert = False)
 			if result.raw_result["nModified"] < 1 and "upserted" not in result.raw_result:
 				return await ctx.send(f"{ctx.author.mention}, 정산 등록 내역 수정 실패.") 
 
-			return await ctx.send(f"📥 정산 등록 내역 수정 완료! 📥")
+			return await ctx.send(f"? 정산 등록 내역 수정 완료! ?")
 		else:
 			return await ctx.send(f"**수정**이 취소되었습니다.\n")
 
@@ -3335,7 +3260,7 @@ class manageCog(commands.Cog):
 		insert_data["modifydate"] = input_time
 		
 		embed = discord.Embed(
-				title = "📜 수정 정보",
+				title = "? 수정 정보",
 				description = "",
 				color=0x00ff00
 				)
@@ -3350,9 +3275,9 @@ class manageCog(commands.Cog):
 		embed.set_footer(text = f"{insert_data['modifydate'].strftime('%y-%m-%d %H:%M:%S')} 수정!")
 		await ctx.send(embed = embed)
 
-		data_regist_warning_message = await ctx.send(f"**입력하신 수정 내역을 확인해 보세요!**\n**수정 : ⭕ 취소: ❌**\n({basicSetting_jungsan[5]}초 동안 입력이 없을시 수정이 취소됩니다.)", tts=False)
+		data_regist_warning_message = await ctx.send(f"**입력하신 수정 내역을 확인해 보세요!**\n**수정 : ? 취소: ?**\n({basicSetting_jungsan[5]}초 동안 입력이 없을시 수정이 취소됩니다.)", tts=False)
 
-		emoji_list : list = ["⭕", "❌"]
+		emoji_list : list = ["?", "?"]
 		for emoji in emoji_list:
 			await data_regist_warning_message.add_reaction(emoji)
 
@@ -3366,12 +3291,12 @@ class manageCog(commands.Cog):
 				await data_regist_warning_message.remove_reaction(emoji, self.bot.user)
 			return await ctx.send(f"시간이 초과됐습니다. **수정**을 취소합니다!")
 
-		if str(reaction) == "⭕":
+		if str(reaction) == "?":
 			result = self.jungsan_db.update_one({"_id":jungsan_data['_id']}, {"$set":insert_data}, upsert = False)
 			if result.raw_result["nModified"] < 1 and "upserted" not in result.raw_result:
 				return await ctx.send(f"{ctx.author.mention}, 정산 등록 내역 수정 실패.") 
 
-			return await ctx.send(f"📥 정산 등록 내역 수정 완료! 📥")
+			return await ctx.send(f"? 정산 등록 내역 수정 완료! ?")
 		else:
 			return await ctx.send(f"**수정**이 취소되었습니다.\n")
 
@@ -3430,7 +3355,7 @@ class manageCog(commands.Cog):
 		insert_data["modifydate"] = input_time
 
 		embed = discord.Embed(
-				title = "📜 수정 정보",
+				title = "? 수정 정보",
 				description = "",
 				color=0x00ff00
 				)
@@ -3445,9 +3370,9 @@ class manageCog(commands.Cog):
 		embed.set_footer(text = f"{insert_data['modifydate'].strftime('%y-%m-%d %H:%M:%S')} 수정!")
 		await ctx.send(embed = embed)
 
-		data_regist_warning_message = await ctx.send(f"**입력하신 수정 내역을 확인해 보세요!**\n**수정 : ⭕ 취소: ❌**\n({basicSetting_jungsan[5]}초 동안 입력이 없을시 수정이 취소됩니다.)", tts=False)
+		data_regist_warning_message = await ctx.send(f"**입력하신 수정 내역을 확인해 보세요!**\n**수정 : ? 취소: ?**\n({basicSetting_jungsan[5]}초 동안 입력이 없을시 수정이 취소됩니다.)", tts=False)
 
-		emoji_list : list = ["⭕", "❌"]
+		emoji_list : list = ["?", "?"]
 		for emoji in emoji_list:
 			await data_regist_warning_message.add_reaction(emoji)
 
@@ -3461,12 +3386,12 @@ class manageCog(commands.Cog):
 				await data_regist_warning_message.remove_reaction(emoji, self.bot.user)
 			return await ctx.send(f"시간이 초과됐습니다. **수정**을 취소합니다!")
 
-		if str(reaction) == "⭕":
+		if str(reaction) == "?":
 			result = self.jungsan_db.update_one({"_id":jungsan_data['_id']}, {"$set":insert_data}, upsert = False)
 			if result.raw_result["nModified"] < 1 and "upserted" not in result.raw_result:
 				return await ctx.send(f"{ctx.author.mention}, 정산 등록 내역 수정 실패.") 
 
-			return await ctx.send(f"📥 정산 등록 내역 수정 완료! 📥")
+			return await ctx.send(f"? 정산 등록 내역 수정 완료! ?")
 		else:
 			return await ctx.send(f"**수정**이 취소되었습니다.\n")
 
@@ -3515,7 +3440,7 @@ class manageCog(commands.Cog):
 		insert_data["before_jungsan_ID"] = tmp_member_list
 
 		embed = discord.Embed(
-				title = "📜 수정 정보",
+				title = "? 수정 정보",
 				description = "",
 				color=0x00ff00
 				)
@@ -3530,9 +3455,9 @@ class manageCog(commands.Cog):
 		embed.set_footer(text = f"{insert_data['modifydate'].strftime('%y-%m-%d %H:%M:%S')} 수정!")
 		await ctx.send(embed = embed)
 
-		data_regist_warning_message = await ctx.send(f"**입력하신 수정 내역을 확인해 보세요!**\n**수정 : ⭕ 취소: ❌**\n({basicSetting_jungsan[5]}초 동안 입력이 없을시 수정이 취소됩니다.)", tts=False)
+		data_regist_warning_message = await ctx.send(f"**입력하신 수정 내역을 확인해 보세요!**\n**수정 : ? 취소: ?**\n({basicSetting_jungsan[5]}초 동안 입력이 없을시 수정이 취소됩니다.)", tts=False)
 
-		emoji_list : list = ["⭕", "❌"]
+		emoji_list : list = ["?", "?"]
 		for emoji in emoji_list:
 			await data_regist_warning_message.add_reaction(emoji)
 
@@ -3546,12 +3471,12 @@ class manageCog(commands.Cog):
 				await data_regist_warning_message.remove_reaction(emoji, self.bot.user)
 			return await ctx.send(f"시간이 초과됐습니다. **수정**을 취소합니다!")
 
-		if str(reaction) == "⭕":
+		if str(reaction) == "?":
 			result = self.jungsan_db.update_one({"_id":jungsan_data['_id']}, {"$set":insert_data}, upsert = False)
 			if result.raw_result["nModified"] < 1 and "upserted" not in result.raw_result:
 				return await ctx.send(f"{ctx.author.mention}, 정산 등록 내역 수정 실패.") 
 
-			return await ctx.send(f"📥 정산 등록 내역 수정 완료! 📥")
+			return await ctx.send(f"? 정산 등록 내역 수정 완료! ?")
 		else:
 			return await ctx.send(f"**수정**이 취소되었습니다.\n")
 
@@ -3603,7 +3528,7 @@ class manageCog(commands.Cog):
 		insert_data["before_jungsan_ID"] = tmp_member_list
 
 		embed = discord.Embed(
-				title = "📜 수정 정보",
+				title = "? 수정 정보",
 				description = "",
 				color=0x00ff00
 				)
@@ -3618,9 +3543,9 @@ class manageCog(commands.Cog):
 		embed.set_footer(text = f"{insert_data['modifydate'].strftime('%y-%m-%d %H:%M:%S')} 수정!")
 		await ctx.send(embed = embed)
 
-		data_regist_warning_message = await ctx.send(f"**입력하신 수정 내역을 확인해 보세요!**\n**수정 : ⭕ 취소: ❌**\n({basicSetting_jungsan[5]}초 동안 입력이 없을시 수정이 취소됩니다.)", tts=False)
+		data_regist_warning_message = await ctx.send(f"**입력하신 수정 내역을 확인해 보세요!**\n**수정 : ? 취소: ?**\n({basicSetting_jungsan[5]}초 동안 입력이 없을시 수정이 취소됩니다.)", tts=False)
 
-		emoji_list : list = ["⭕", "❌"]
+		emoji_list : list = ["?", "?"]
 		for emoji in emoji_list:
 			await data_regist_warning_message.add_reaction(emoji)
 
@@ -3634,12 +3559,12 @@ class manageCog(commands.Cog):
 				await data_regist_warning_message.remove_reaction(emoji, self.bot.user)
 			return await ctx.send(f"시간이 초과됐습니다. **수정**을 취소합니다!")
 
-		if str(reaction) == "⭕":
+		if str(reaction) == "?":
 			result = self.jungsan_db.update_one({"_id":jungsan_data['_id']}, {"$set":insert_data}, upsert = False)
 			if result.raw_result["nModified"] < 1 and "upserted" not in result.raw_result:
 				return await ctx.send(f"{ctx.author.mention}, 정산 등록 내역 수정 실패.") 
 
-			return await ctx.send(f"📥 정산 등록 내역 수정 완료! 📥")
+			return await ctx.send(f"? 정산 등록 내역 수정 완료! ?")
 		else:
 			return await ctx.send(f"**수정**이 취소되었습니다.\n")
 
@@ -3675,7 +3600,7 @@ class manageCog(commands.Cog):
 		insert_data["modifydate"] = input_time
 		
 		embed = discord.Embed(
-				title = "📜 수정 정보",
+				title = "? 수정 정보",
 				description = "",
 				color=0x00ff00
 				)
@@ -3692,14 +3617,14 @@ class manageCog(commands.Cog):
 		try:
 			await ctx.send(embed = embed)
 		except Exception:
-			embed.add_field(name = "🚫  이미지 링크 확인 필요  🚫", value = f"```저장된 이미지가 삭제됩니다.```")
+			embed.add_field(name = "?  이미지 링크 확인 필요  ?", value = f"```저장된 이미지가 삭제됩니다.```")
 			insert_data["image_url"] = ""
 			embed.set_image(url = insert_data["image_url"])
 			await ctx.send(embed = embed)
 		
-		data_regist_warning_message = await ctx.send(f"**입력하신 수정 내역을 확인해 보세요!**\n**수정 : ⭕ 취소: ❌**\n({basicSetting_jungsan[5]}초 동안 입력이 없을시 수정이 취소됩니다.)", tts=False)
+		data_regist_warning_message = await ctx.send(f"**입력하신 수정 내역을 확인해 보세요!**\n**수정 : ? 취소: ?**\n({basicSetting_jungsan[5]}초 동안 입력이 없을시 수정이 취소됩니다.)", tts=False)
 
-		emoji_list : list = ["⭕", "❌"]
+		emoji_list : list = ["?", "?"]
 		for emoji in emoji_list:
 			await data_regist_warning_message.add_reaction(emoji)
 
@@ -3713,12 +3638,12 @@ class manageCog(commands.Cog):
 				await data_regist_warning_message.remove_reaction(emoji, self.bot.user)
 			return await ctx.send(f"시간이 초과됐습니다. **수정**을 취소합니다!")
 
-		if str(reaction) == "⭕":
+		if str(reaction) == "?":
 			result = self.jungsan_db.update_one({"_id":jungsan_data['_id']}, {"$set":insert_data}, upsert = False)
 			if result.raw_result["nModified"] < 1 and "upserted" not in result.raw_result:
 				return await ctx.send(f"{ctx.author.mention}, 정산 등록 내역 수정 실패.") 
 
-			return await ctx.send(f"📥 정산 등록 내역 수정 완료! 📥")
+			return await ctx.send(f"? 정산 등록 내역 수정 완료! ?")
 		else:
 			return await ctx.send(f"**수정**이 취소되었습니다.\n")
 
@@ -3772,13 +3697,13 @@ class manageCog(commands.Cog):
 						"reason":"정산금 혈비 적립"
 			}
 			result_guild_log = self.guild_db_log.insert_one(insert_log_data)
-			return await ctx.send(f"**[ 순번 : {input_sell_price_data[0]} ]**   💰판매금 **[ {after_tax_price} ]**(세율 {basicSetting_jungsan[7]}% 적용) 혈비 적립 완료!")
+			return await ctx.send(f"**[ 순번 : {input_sell_price_data[0]} ]**   ?판매금 **[ {after_tax_price} ]**(세율 {basicSetting_jungsan[7]}% 적용) 혈비 적립 완료!")
 		
 		result = self.jungsan_db.update_one({"_id":input_sell_price_data[0]}, {"$set":{"price":input_sell_price_data[1], "each_price":result_each_price, "itemstatus":"분배중"}}, upsert = False)
 		if result.raw_result["nModified"] < 1 and "upserted" not in result.raw_result:
 			return await ctx.send(f"{ctx.author.mention}, 판매 등록 실패.") 			
 
-		return await ctx.send(f"**[ 순번 : {input_sell_price_data[0]} ]**   💰판매금 **[ {input_sell_price_data[1]} ]** 등록 완료! 분배를 시작합니다.")
+		return await ctx.send(f"**[ 순번 : {input_sell_price_data[0]} ]**   ?판매금 **[ {input_sell_price_data[1]} ]** 등록 완료! 분배를 시작합니다.")
 
 	################ 뽑기판매입력 ################ 
 	@commands.command(name=commandSetting_jungsan[45][0], aliases=commandSetting_jungsan[45][1:])
@@ -3842,13 +3767,13 @@ class manageCog(commands.Cog):
 						"reason":"정산금 혈비 적립"
 			}
 			result_guild_log = self.guild_db_log.insert_one(insert_log_data)
-			return await ctx.send(f"**[ 순번 : {input_sell_price_data[0]} ]**   💰판매금 **[ {after_tax_price} ]**(세율 {basicSetting_jungsan[7]}% 적용) 혈비 적립 완료!")
+			return await ctx.send(f"**[ 순번 : {input_sell_price_data[0]} ]**   ?판매금 **[ {after_tax_price} ]**(세율 {basicSetting_jungsan[7]}% 적용) 혈비 적립 완료!")
 		
 		result = self.jungsan_db.update_one({"_id":input_sell_price_data[0]}, {"$set":{"price":input_sell_price_data[1], "each_price":result_each_price, "before_jungsan_ID":result_ladder, "itemstatus":"분배중", "ladder_check":ladder_check}}, upsert = False)
 		if result.raw_result["nModified"] < 1 and "upserted" not in result.raw_result:
 			return await ctx.send(f"{ctx.author.mention}, 판매 등록 실패.") 			
 
-		return await ctx.send(f"**[ 순번 : {input_sell_price_data[0]} ]**   💰판매금 **[ {input_sell_price_data[1]} ]** 등록 완료! 분배를 시작합니다.")
+		return await ctx.send(f"**[ 순번 : {input_sell_price_data[0]} ]**   ?판매금 **[ {input_sell_price_data[1]} ]** 등록 완료! 분배를 시작합니다.")
 
 	################ 정산 처리 입력 ################ 
 	@commands.command(name=commandSetting_jungsan[25][0], aliases=commandSetting_jungsan[25][1:])
@@ -3881,7 +3806,7 @@ class manageCog(commands.Cog):
 			return await ctx.send(f"{ctx.author.mention}님! 등록하신 정산 내역이 **[ 분배중 ]**이 아니거나 없습니다. **[ {commandSetting_jungsan[13][0]} ]** 명령을 통해 확인해주세요")
 		else:
 			if input_distribute_finish_data[1] in jungsan_data["after_jungsan_ID"]:
-				return await ctx.send(f"**[ {input_distribute_finish_data[1]} ]**님은 **[ 순번 : {input_distribute_finish_data[0]} ]**의 정산 내역에 대하여 이미 💰**[ {jungsan_data['each_price']} ]** 정산 받았습니다!")
+				return await ctx.send(f"**[ {input_distribute_finish_data[1]} ]**님은 **[ 순번 : {input_distribute_finish_data[0]} ]**의 정산 내역에 대하여 이미 ?**[ {jungsan_data['each_price']} ]** 정산 받았습니다!")
 			elif input_distribute_finish_data[1] not in jungsan_data["before_jungsan_ID"]:
 				return await ctx.send(f"**[ {input_distribute_finish_data[1]} ]**님은 **[ 순번 : {input_distribute_finish_data[0]} ]**의 정산 전 명단에 존재하지 않습니다!")
 			else:
@@ -3897,7 +3822,7 @@ class manageCog(commands.Cog):
 			result = self.jungsan_db.update_one({"_id":int(input_distribute_finish_data[0])}, {"$set":{"before_jungsan_ID":jungsan_data["before_jungsan_ID"], "after_jungsan_ID":jungsan_data["after_jungsan_ID"], "itemstatus" : "분배완료"}}, upsert = False)
 			if result.raw_result["nModified"] < 1 and "upserted" not in result.raw_result:
 				return await ctx.send(f"{ctx.author.mention}, 정산 실패.") 		
-			return await ctx.send(f"**[ 순번 : {input_distribute_finish_data[0]} ]** : **[ {input_distribute_finish_data[1]} ]**님 정산 완료!\n**[ 순번 : {input_distribute_finish_data[0]} ]** 분배 완료!🎉")
+			return await ctx.send(f"**[ 순번 : {input_distribute_finish_data[0]} ]** : **[ {input_distribute_finish_data[1]} ]**님 정산 완료!\n**[ 순번 : {input_distribute_finish_data[0]} ]** 분배 완료!?")
 		else:
 			result = self.jungsan_db.update_one({"_id":int(input_distribute_finish_data[0])}, {"$set":{"before_jungsan_ID":jungsan_data["before_jungsan_ID"], "after_jungsan_ID":jungsan_data["after_jungsan_ID"]}}, upsert = False)
 			if result.raw_result["nModified"] < 1 and "upserted" not in result.raw_result:
@@ -4002,7 +3927,7 @@ class manageCog(commands.Cog):
 		init_data : dict = {}
 
 		embed = discord.Embed(
-					title = f"📜 [{member_data['game_ID']}]님 등록 내역",
+					title = f"? [{member_data['game_ID']}]님 등록 내역",
 					description = "",
 					color=0x00ff00
 					)
@@ -4019,8 +3944,8 @@ class manageCog(commands.Cog):
 					color=0x00ff00
 					)
 				embed_list.append(tmp_embed)
-			detail_info_ing = f"```diff\n+ 분 배 중 : {len(jungsan_data['before_jungsan_ID'])}명 (💰{len(jungsan_data['before_jungsan_ID'])*jungsan_data['each_price']})\n{', '.join(jungsan_data['before_jungsan_ID'])}\n- 분배완료 : {len(jungsan_data['after_jungsan_ID'])}명  (💰{len(jungsan_data['after_jungsan_ID'])*jungsan_data['each_price']})\n{', '.join(jungsan_data['after_jungsan_ID'])}```"
-			embed_list[embed_cnt].add_field(name = f"[ 순번 : {jungsan_data['_id']} ] | {jungsan_data['getdate'].strftime('%y-%m-%d')} | {jungsan_data['boss']} | {jungsan_data['item']} | {jungsan_data['toggle']} | {jungsan_data['itemstatus']} : 1인당 💰{jungsan_data['each_price']}",
+			detail_info_ing = f"```diff\n+ 분 배 중 : {len(jungsan_data['before_jungsan_ID'])}명 (?{len(jungsan_data['before_jungsan_ID'])*jungsan_data['each_price']})\n{', '.join(jungsan_data['before_jungsan_ID'])}\n- 분배완료 : {len(jungsan_data['after_jungsan_ID'])}명  (?{len(jungsan_data['after_jungsan_ID'])*jungsan_data['each_price']})\n{', '.join(jungsan_data['after_jungsan_ID'])}```"
+			embed_list[embed_cnt].add_field(name = f"[ 순번 : {jungsan_data['_id']} ] | {jungsan_data['getdate'].strftime('%y-%m-%d')} | {jungsan_data['boss']} | {jungsan_data['item']} | {jungsan_data['toggle']} | {jungsan_data['itemstatus']} : 1인당 ?{jungsan_data['each_price']}",
 							value = detail_info_ing,
 							inline = False)
 			total_distribute_money += len(jungsan_data['before_jungsan_ID'])*int(jungsan_data['each_price'])
@@ -4034,15 +3959,15 @@ class manageCog(commands.Cog):
 			await ctx.send(embed = embed)
 
 		embed1 = discord.Embed(
-			title = f"일괄정산 예정 금액 : 💰 {str(total_distribute_money)}",
+			title = f"일괄정산 예정 금액 : ? {str(total_distribute_money)}",
 			description = "",
 			color=0x00ff00
 			)
 		await ctx.send(embed = embed1)
 
-		distribute_all_finish_warning_message = await ctx.send(f"**일괄 정산 예정인 등록 내역을 확인해 보세요!**\n**일괄정산 : ⭕ 취소: ❌**\n({basicSetting_jungsan[5]}초 동안 입력이 없을시 일괄정산이 취소됩니다.)", tts=False)
+		distribute_all_finish_warning_message = await ctx.send(f"**일괄 정산 예정인 등록 내역을 확인해 보세요!**\n**일괄정산 : ? 취소: ?**\n({basicSetting_jungsan[5]}초 동안 입력이 없을시 일괄정산이 취소됩니다.)", tts=False)
 
-		emoji_list : list = ["⭕", "❌"]
+		emoji_list : list = ["?", "?"]
 		for emoji in emoji_list:
 			await distribute_all_finish_warning_message.add_reaction(emoji)
 
@@ -4056,13 +3981,13 @@ class manageCog(commands.Cog):
 				await data_regist_warning_message.remove_reaction(emoji, self.bot.user)
 			return await ctx.send(f"시간이 초과됐습니다. **일괄정산**을 취소합니다!")
 
-		if str(reaction) == "⭕":
+		if str(reaction) == "?":
 			for jungsan_data in jungsan_document:
 				result = self.jungsan_db.update_one({"_id":jungsan_data['_id']}, {"$set":{"before_jungsan_ID":[], "after_jungsan_ID":init_data[jungsan_data['_id']]+jungsan_data['before_jungsan_ID'], "itemstatus":"분배완료"}}, upsert = True)
 				if result.raw_result["nModified"] < 1 and "upserted" not in result.raw_result:
 					await ctx.send(f"{ctx.author.mention}, 일괄정산 실패.") 
 
-			return await ctx.send(f"📥 일괄정산 완료! 📥")
+			return await ctx.send(f"? 일괄정산 완료! ?")
 		else:
 			return await ctx.send(f"**일괄정산**이 취소되었습니다.\n")
 
@@ -4110,13 +4035,13 @@ class bankCog(commands.Cog):
 		price_rev_tax = int((input_money_data[0] * 100)/(100-tax)+0.5)
 
 		embed = discord.Embed(
-				title = f"🧮  수수료 계산결과 (세율 {tax}% 기준) ",
+				title = f"?  수수료 계산결과 (세율 {tax}% 기준) ",
 				description = f"",
 				color=0x00ff00
 				)
-		embed.add_field(name = "⚖️ 수수료 지원", value = f"```등록가 : {price_rev_tax}\n수령가 : {input_money_data[0]}\n세 금 : {price_rev_tax-input_money_data[0]}```")
-		embed.add_field(name = "⚖️ 1차 거래", value = f"```등록가 : {input_money_data[0]}\n정산가 : {price_first_tax}\n세 금 : {input_money_data[0]-price_first_tax}```")
-		embed.add_field(name = "⚖️ 2차 거래", value = f"```등록가 : {price_first_tax}\n정산가 : {price_second_tax}\n세 금 : {price_first_tax-price_second_tax}```")
+		embed.add_field(name = "?? 수수료 지원", value = f"```등록가 : {price_rev_tax}\n수령가 : {input_money_data[0]}\n세 금 : {price_rev_tax-input_money_data[0]}```")
+		embed.add_field(name = "?? 1차 거래", value = f"```등록가 : {input_money_data[0]}\n정산가 : {price_first_tax}\n세 금 : {input_money_data[0]-price_first_tax}```")
+		embed.add_field(name = "?? 2차 거래", value = f"```등록가 : {price_first_tax}\n정산가 : {price_second_tax}\n세 금 : {price_first_tax-price_second_tax}```")
 		return await ctx.send(embed = embed)
 
 	################ 페이백 계산기 ################ 
@@ -4156,21 +4081,21 @@ class bankCog(commands.Cog):
 		reault_payback1= price_reg_tax - input_money_data[1]
 
 		embed = discord.Embed(
-				title = f"🧮  페이백 계산결과1 (세율 {tax}% 기준) ",
+				title = f"?  페이백 계산결과1 (세율 {tax}% 기준) ",
 				description = f"**```fix\n{reault_payback}```**",
 				color=0x00ff00
 				)
-		embed.add_field(name = "⚖️ 거래소", value = f"```등록가 : {input_money_data[0]}\n정산가 : {price_reg_tax}\n세 금 : {input_money_data[0]-price_reg_tax}```")
-		embed.add_field(name = "🕵️ 실거래", value = f"```등록가 : {input_money_data[1]}\n정산가 : {price_real_tax}\n세 금 : {input_money_data[1]-price_real_tax}```")
+		embed.add_field(name = "?? 거래소", value = f"```등록가 : {input_money_data[0]}\n정산가 : {price_reg_tax}\n세 금 : {input_money_data[0]-price_reg_tax}```")
+		embed.add_field(name = "?? 실거래", value = f"```등록가 : {input_money_data[1]}\n정산가 : {price_real_tax}\n세 금 : {input_money_data[1]-price_real_tax}```")
 		await ctx.send(embed = embed)
 
 		embed2 = discord.Embed(
-				title = f"🧮  페이백 계산결과2 (세율 {tax}% 기준) ",
+				title = f"?  페이백 계산결과2 (세율 {tax}% 기준) ",
 				description = f"**```fix\n{reault_payback1}```**",
 				color=0x00ff00
 				)
-		embed2.add_field(name = "⚖️ 거래소", value = f"```등록가 : {input_money_data[0]}\n정산가 : {price_reg_tax}\n세 금 : {input_money_data[0]-price_reg_tax}```")
-		embed2.add_field(name = "🕵️ 실거래", value = f"```내판가 : {input_money_data[1]}```")
+		embed2.add_field(name = "?? 거래소", value = f"```등록가 : {input_money_data[0]}\n정산가 : {price_reg_tax}\n세 금 : {input_money_data[0]-price_reg_tax}```")
+		embed2.add_field(name = "?? 실거래", value = f"```내판가 : {input_money_data[1]}```")
 		return await ctx.send(embed = embed2)
 
 	################ 계좌확인 ################ 
@@ -4185,7 +4110,7 @@ class bankCog(commands.Cog):
 			return await ctx.send(f"{ctx.author.mention}님은 혈원으로 등록되어 있지 않습니다!")
 
 		embed = discord.Embed(
-				title = f"[{member_data['game_ID']}]님 은행 잔고 📝",
+				title = f"[{member_data['game_ID']}]님 은행 잔고 ?",
 				description = f"**```diff\n{member_data['account']}```**",
 				color=0x00ff00
 				)
@@ -4243,7 +4168,7 @@ class bankCog(commands.Cog):
 		if result.raw_result["nModified"] < 1 and "upserted" not in result.raw_result:
 			return await ctx.send(f"{ctx.author.mention}, 은행 저축 실패.")		
 
-		return await ctx.send(f"**[ 순번 : {input_sell_price_data[0]} ]**   💰판매금 **[ {after_tax_price} ]**(세율 {basicSetting_jungsan[7]}% 적용)\n**{jungsan_document['before_jungsan_ID']}**계좌로 인당 **💰 [ {result_each_price} ]** 은행 저축 완료!")
+		return await ctx.send(f"**[ 순번 : {input_sell_price_data[0]} ]**   ?판매금 **[ {after_tax_price} ]**(세율 {basicSetting_jungsan[7]}% 적용)\n**{jungsan_document['before_jungsan_ID']}**계좌로 인당 **? [ {result_each_price} ]** 은행 저축 완료!")
 
 	################ 뽑기저축 ################ 
 	@commands.command(name=commandSetting_jungsan[48][0], aliases=commandSetting_jungsan[48][1:])
@@ -4310,7 +4235,7 @@ class bankCog(commands.Cog):
 		if result.raw_result["nModified"] < 1 and "upserted" not in result.raw_result:
 			return await ctx.send(f"{ctx.author.mention}, 은행 저축 실패.")		
 
-		return await ctx.send(f"**[ 순번 : {input_sell_price_data[0]} ]**   💰판매금 **[ {after_tax_price} ]**(세율 {basicSetting_jungsan[7]}% 적용)\n**{participant_list}**계좌로 인당 **💰 [ {result_each_price} ]** 은행 저축 완료!")
+		return await ctx.send(f"**[ 순번 : {input_sell_price_data[0]} ]**   ?판매금 **[ {after_tax_price} ]**(세율 {basicSetting_jungsan[7]}% 적용)\n**{participant_list}**계좌로 인당 **? [ {result_each_price} ]** 은행 저축 완료!")
 
 	################ 입금 #################
 	@is_manager() 
@@ -4357,7 +4282,7 @@ class bankCog(commands.Cog):
 		if result_update.modified_count != len(input_bank_deposit_data[1:]):
 			return await ctx.send(f"```은행 입금 실패. 정확한 [아이디]를 입력 후 다시 시도 해보세요!```")
 
-		return await ctx.send(f"```ml\n{input_bank_deposit_data[1:]}님 💰[{input_bank_deposit_data[0]}] 은행 입금 완료!.```")
+		return await ctx.send(f"```ml\n{input_bank_deposit_data[1:]}님 ?[{input_bank_deposit_data[0]}] 은행 입금 완료!.```")
 
 	################ 출금 #################
 	@is_manager() 
@@ -4405,7 +4330,7 @@ class bankCog(commands.Cog):
 		if result_update.modified_count != len(input_bank_withdraw_data[1:]):
 			return await ctx.send(f"```은행 출금 실패. 정확한 [아이디]를 입력 후 다시 시도 해보세요!```")
 
-		return await ctx.send(f"```ml\n{input_bank_withdraw_data[1:]}님 💰[{input_bank_withdraw_data[0]}] 은행 출금 완료!.```")
+		return await ctx.send(f"```ml\n{input_bank_withdraw_data[1:]}님 ?[{input_bank_withdraw_data[0]}] 은행 출금 완료!.```")
 
 	################ 혈비입금 #################
 	@is_manager() 
@@ -4442,7 +4367,7 @@ class bankCog(commands.Cog):
 		total_guild_money : dict = self.guild_db.find_one({"_id":"guild"})
 
 		embed = discord.Embed(
-				title = f"💰  혈비 입금 완료",
+				title = f"?  혈비 입금 완료",
 				description = f"",
 				color=0x00ff00
 				)
@@ -4489,7 +4414,7 @@ class bankCog(commands.Cog):
 		total_guild_money : dict = self.guild_db.find_one({"_id":"guild"})
 
 		embed = discord.Embed(
-				title = f"💰  혈비 출금 완료",
+				title = f"?  혈비 출금 완료",
 				description = f"",
 				color=0x00ff00
 				)
@@ -4563,12 +4488,12 @@ class bankCog(commands.Cog):
 			return await ctx.send(f"```혈비 출금 실패!```")
 
 		embed = discord.Embed(
-				title = f"🤑 혈비 지원 완료",
-				description = f"```css\n[{input_guild_support_money_data[1]}] 사유로 💰[{input_guild_support_money_ID_data[0]}]씩 혈비에서 지원했습니다.```",
+				title = f"? 혈비 지원 완료",
+				description = f"```css\n[{input_guild_support_money_data[1]}] 사유로 ?[{input_guild_support_money_ID_data[0]}]씩 혈비에서 지원했습니다.```",
 				color=0x00ff00
 				)
-		embed.add_field(name = f"**👥  명단**", value = f"**```fix\n{', '.join(input_guild_support_money_ID_data[1:])}```**")
-		embed.add_field(name = f"**💰  지원금**", value = f"**```fix\n{input_guild_support_money_ID_data[0]}```**")
+		embed.add_field(name = f"**?  명단**", value = f"**```fix\n{', '.join(input_guild_support_money_ID_data[1:])}```**")
+		embed.add_field(name = f"**?  지원금**", value = f"**```fix\n{input_guild_support_money_ID_data[0]}```**")
 		return await ctx.send(embed = embed)
 
 	################ 창고검색 #################
@@ -4600,7 +4525,7 @@ class bankCog(commands.Cog):
 		embed_index : int = 0
 		embed_cnt : int = 0
 
-		embed = discord.Embed(title = '', description = f'📦  `창고 내역`', color = 0x00ff00)
+		embed = discord.Embed(title = '', description = f'?  `창고 내역`', color = 0x00ff00)
 
 		embed_list.append(embed)
 
@@ -4628,6 +4553,93 @@ class bankCog(commands.Cog):
 		else :
 			embed.add_field(name = '\u200b\n', value = '창고가 비었습니다.\n\u200b')
 			return await ctx.send(embed=embed, tts=False)
+
+# 봇이 구동되었을 때 동작되는 코드입니다.
+@client.event
+async def on_ready():
+	global basicSetting
+
+	global channel
+	
+	global voice_client1
+
+	global channel_info
+	global channel_name
+	global channel_id
+	global channel_voice_name
+	global channel_voice_id
+	global channel_type
+	
+	global chkvoicechannel
+	global chflg
+	
+	global endTime
+	global setting_channel_name
+			
+	print("Logged in as ") #화면에 봇의 아이디, 닉네임이 출력됩니다.
+	print(client.user.name)
+	print(client.user.id)
+	print("===========")
+
+	channel_name, channel_id, channel_voice_name, channel_voice_id = await get_guild_channel_info()
+
+	await dbLoad()
+
+	if str(basicSetting[6]) in channel_voice_id and str(basicSetting[7]) in channel_id:
+		voice_client1 = await client.get_channel(basicSetting[6]).connect(reconnect=True)
+		channel = basicSetting[7]
+
+		setting_channel_name = client.get_channel(basicSetting[7]).name
+
+		now = datetime.datetime.now() + datetime.timedelta(hours = int(basicSetting[0]))
+
+		print('< 접속시간 [' + now.strftime('%Y-%m-%d ') + now.strftime('%H:%M:%S') + '] >')
+		print('< 텍스트채널 [' + client.get_channel(basicSetting[7]).name + '] 접속완료>')
+		print('< 음성채널 [' + client.get_channel(basicSetting[6]).name + '] 접속완료>')
+		if basicSetting[8] != "":
+			if str(basicSetting[8]) in channel_id:
+				print('< 사다리채널 [' + client.get_channel(int(basicSetting[8])).name + '] 접속완료 >')
+			else:
+				basicSetting[8] = ""
+				print(f"사다리채널 ID 오류! [{command[28][0]} 사다리] 명령으로 재설정 바랍니다.")
+		if basicSetting[11] != "":
+			if str(basicSetting[11]) in channel_id:
+				print('< 정산채널 [' + client.get_channel(int(basicSetting[11])).name + '] 접속완료>')
+			else:
+				basicSetting[11] = ""
+				print(f"정산채널 ID 오류! [{command[28][0]} 정산] 명령으로 재설정 바랍니다.")
+		if basicSetting[18] != "":
+			if str(basicSetting[18]) in channel_id:
+				print('< 척살채널 [' + client.get_channel(int(basicSetting[18])).name + '] 접속완료>')
+			else:
+				basicSetting[18] = ""
+				print(f"척살채널 ID 오류! [{command[28][0]} 척살] 명령으로 재설정 바랍니다.")
+		if basicSetting[19] != "":
+			if str(basicSetting[19]) in channel_id:
+				print('< 경주채널 [' + client.get_channel(int(basicSetting[19])).name + '] 접속완료>')
+			else:
+				basicSetting[19] = ""
+				print(f"경주채널 ID 오류! [{command[28][0]} 경주] 명령으로 재설정 바랍니다.")
+		if basicSetting[20] != "":
+			if str(basicSetting[20]) in channel_id:
+				print('< 아이템채널 [' + client.get_channel(int(basicSetting[20])).name + '] 접속완료>')
+			else:
+				basicSetting[20] = ""
+				print(f"아이템채널 ID 오류! [{command[28][0]} 아이템] 명령으로 재설정 바랍니다.")
+		if int(basicSetting[13]) != 0 :
+			print('< 보탐봇 재시작 시간 ' + endTime.strftime('%Y-%m-%d ') + endTime.strftime('%H:%M:%S') + ' >')
+			print('< 보탐봇 재시작 주기 ' + basicSetting[13] + '일 >')
+		else :
+			print('< 보탐봇 재시작 설정안됨 >')
+		chflg = 1
+	else:
+		basicSetting[6] = ""
+		basicSetting[7] = ""
+		print(f"설정된 채널 값이 없거나 잘못 됐습니다. **[{command[0][0]}]** 명령어 먼저 입력하여 사용해주시기 바랍니다.")
+
+	# 디스코드에는 현재 본인이 어떤 게임을 플레이하는지 보여주는 기능이 있습니다.
+	# 이 기능을 사용하여 봇의 상태를 간단하게 출력해줄 수 있습니다.
+	await client.change_presence(status=discord.Status.dnd, activity=discord.Game(name=command[1][0], type=1), afk=False)
 
 while True:
 	################ 보탐봇 입장 ################ 	
@@ -4664,37 +4676,37 @@ while True:
 
 			await ctx.send(f"< 텍스트채널 [{ctx.message.channel.name}] 접속완료 >\n< 음성채널 접속 후 [{command[5][0]}] 명령을 사용 하세요 >", tts=False)
 			
-			print('< 텍스트채널 [' + self.get_channel(basicSetting[7]).name + '] 접속완료>')
+			print('< 텍스트채널 [' + client.get_channel(basicSetting[7]).name + '] 접속완료>')
 			if basicSetting[6] != "":
-				voice_client1 = await self.get_channel(basicSetting[6]).connect(reconnect=True)
-				print('< 음성채널 [' + self.get_channel(basicSetting[6]).name + '] 접속완료>')
+				voice_client1 = await client.get_channel(basicSetting[6]).connect(reconnect=True)
+				print('< 음성채널 [' + client.get_channel(basicSetting[6]).name + '] 접속완료>')
 			if basicSetting[8] != "":
 				if str(basicSetting[8]) in channel_id:
-					print('< 사다리채널 [' + self.get_channel(int(basicSetting[8])).name + '] 접속완료 >')
+					print('< 사다리채널 [' + client.get_channel(int(basicSetting[8])).name + '] 접속완료 >')
 				else:
 					basicSetting[8] = ""
 					print(f"사다리채널 ID 오류! [{command[28][0]} 사다리] 명령으로 재설정 바랍니다.")
 			if basicSetting[11] != "":
 				if str(basicSetting[11]) in channel_id:
-					print('< 정산채널 [' + self.get_channel(int(basicSetting[11])).name + '] 접속완료>')
+					print('< 정산채널 [' + client.get_channel(int(basicSetting[11])).name + '] 접속완료>')
 				else:
 					basicSetting[11] = ""
 					print(f"정산채널 ID 오류! [{command[28][0]} 정산] 명령으로 재설정 바랍니다.")
 			if basicSetting[18] != "":
 				if str(basicSetting[18]) in channel_id:
-					print('< 척살채널 [' + self.get_channel(int(basicSetting[18])).name + '] 접속완료>')
+					print('< 척살채널 [' + client.get_channel(int(basicSetting[18])).name + '] 접속완료>')
 				else:
 					basicSetting[18] = ""
 					print(f"척살채널 ID 오류! [{command[28][0]} 척살] 명령으로 재설정 바랍니다.")
 			if basicSetting[19] != "":
 				if str(basicSetting[19]) in channel_id:
-					print('< 경주채널 [' + self.get_channel(int(basicSetting[19])).name + '] 접속완료>')
+					print('< 경주채널 [' + client.get_channel(int(basicSetting[19])).name + '] 접속완료>')
 				else:
 					basicSetting[19] = ""
 					print(f"경주채널 ID 오류! [{command[28][0]} 경주] 명령으로 재설정 바랍니다.")
 			if basicSetting[20] != "":
 				if str(basicSetting[20]) in channel_id:
-					print('< 아이템채널 [' + self.get_channel(int(basicSetting[20])).name + '] 접속완료>')
+					print('< 아이템채널 [' + client.get_channel(int(basicSetting[20])).name + '] 접속완료>')
 				else:
 					basicSetting[20] = ""
 					print(f"아이템채널 ID 오류! [{command[28][0]} 아이템] 명령으로 재설정 바랍니다.")
@@ -4711,8 +4723,8 @@ while True:
 					if basicSetting[7] == text_channel.id:
 						curr_guild_info = guild
 
-			emoji_list : list = ["⭕", "❌"]
-			guild_error_message = await ctx.send(f"이미 **[{curr_guild_info.name}]** 서버 **[{setting_channel_name}]** 채널이 명령어 채널로 설정되어 있습니다.\n해당 채널로 명령어 채널을 변경 하시려면 ⭕ 그대로 사용하시려면 ❌ 를 눌러주세요.\n(10초이내 미입력시 기존 설정 그대로 설정됩니다.)", tts=False)
+			emoji_list : list = ["?", "?"]
+			guild_error_message = await ctx.send(f"이미 **[{curr_guild_info.name}]** 서버 **[{setting_channel_name}]** 채널이 명령어 채널로 설정되어 있습니다.\n해당 채널로 명령어 채널을 변경 하시려면 ? 그대로 사용하시려면 ? 를 눌러주세요.\n(10초이내 미입력시 기존 설정 그대로 설정됩니다.)", tts=False)
 
 			for emoji in emoji_list:
 				await guild_error_message.add_reaction(emoji)
@@ -4724,7 +4736,7 @@ while True:
 			except asyncio.TimeoutError:
 				return await ctx.send(f"시간이 초과됐습니다. **[{curr_guild_info.name}]** 서버 **[{setting_channel_name}]** 채널에서 사용해주세요!")
 
-			if str(reaction) == "⭕":
+			if str(reaction) == "?":
 				await voice_client1.disconnect()
 				basicSetting[6] = ""
 				basicSetting[7] = int(ctx.message.channel.id)
@@ -4816,18 +4828,18 @@ while True:
 		#print (ctx.message.channel.id)
 		if ctx.message.channel.id == basicSetting[7]:
 			setting_val = '보탐봇버전 : Server Ver. 18 (2020. 7. 4.)\n'
-			setting_val += '음성채널 : ' + self.get_channel(basicSetting[6]).name + '\n'
-			setting_val += '텍스트채널 : ' + self.get_channel(basicSetting[7]).name +'\n'
+			setting_val += '음성채널 : ' + client.get_channel(basicSetting[6]).name + '\n'
+			setting_val += '텍스트채널 : ' + client.get_channel(basicSetting[7]).name +'\n'
 			if basicSetting[8] != "" :
-				setting_val += '사다리채널 : ' + self.get_channel(int(basicSetting[8])).name + '\n'
+				setting_val += '사다리채널 : ' + client.get_channel(int(basicSetting[8])).name + '\n'
 			if basicSetting[11] != "" :
-				setting_val += '정산채널 : ' + self.get_channel(int(basicSetting[11])).name + '\n'
+				setting_val += '정산채널 : ' + client.get_channel(int(basicSetting[11])).name + '\n'
 			if basicSetting[18] != "" :
-				setting_val += '척살채널 : ' + self.get_channel(int(basicSetting[18])).name + '\n'
+				setting_val += '척살채널 : ' + client.get_channel(int(basicSetting[18])).name + '\n'
 			if basicSetting[19] != "" :
-				setting_val += '경주채널 : ' + self.get_channel(int(basicSetting[19])).name + '\n'
+				setting_val += '경주채널 : ' + client.get_channel(int(basicSetting[19])).name + '\n'
 			if basicSetting[20] != "" :
-				setting_val += '아이템채널 : ' + self.get_channel(int(basicSetting[20])).name + '\n'
+				setting_val += '아이템채널 : ' + client.get_channel(int(basicSetting[20])).name + '\n'
 			setting_val += '보스젠알림시간1 : ' + basicSetting[1] + ' 분 전\n'
 			setting_val += '보스젠알림시간2 : ' + basicSetting[3] + ' 분 전\n'
 			setting_val += '보스멍확인시간 : ' + basicSetting[2] + ' 분 후\n'
@@ -4859,7 +4871,7 @@ while True:
 			ch_voice_information.append("")
 
 			for guild in client.guilds:
-				ch_information[cnt] = f"{ch_information[cnt]}👑  {guild.name}  👑\n"
+				ch_information[cnt] = f"{ch_information[cnt]}?  {guild.name}  ?\n"
 				for i in range(len(channel_name)):
 					for text_channel in guild.text_channels:
 						if channel_id[i] == str(text_channel.id):
@@ -4868,7 +4880,7 @@ while True:
 								cnt += 1
 							ch_information[cnt] = f"{ch_information[cnt]}[{channel_id[i]}] {channel_name[i]}\n"
 
-				ch_voice_information[cntV] = f"{ch_voice_information[cntV]}👑  {guild.name}  👑\n"
+				ch_voice_information[cntV] = f"{ch_voice_information[cntV]}?  {guild.name}  ?\n"
 				for i in range(len(channel_voice_name)):
 					for voice_channel in guild.voice_channels:
 						if channel_voice_id[i] == str(voice_channel.id):
@@ -4952,8 +4964,8 @@ while True:
 			contents = repo.get_contents("test_setting.ini")
 			repo.update_file(contents.path, "test_setting", result_textCH, contents.sha)
 			
-			await ctx.send( f"명령어 채널이 < {ctx.message.channel.name} >에서 < {self.get_channel(channel).name} > 로 이동되었습니다.", tts=False)
-			await self.get_channel(channel).send( f"< {self.get_channel(channel).name} 이동완료 >", tts=False)
+			await ctx.send( f"명령어 채널이 < {ctx.message.channel.name} >에서 < {client.get_channel(channel).name} > 로 이동되었습니다.", tts=False)
+			await client.get_channel(channel).send( f"< {client.get_channel(channel).name} 이동완료 >", tts=False)
 		else:
 			return
 
@@ -4979,7 +4991,7 @@ while True:
 			voice_channel = ctx.author.voice.channel
 
 			print ('< ', basicSetting[6], ' >')
-			print ('> ', self.get_channel(voice_channel.id).name, ' <')
+			print ('> ', client.get_channel(voice_channel.id).name, ' <')
 
 			if basicSetting[6] == "":
 				inidata_voiceCH = repo.get_contents("test_setting.ini")
@@ -5013,7 +5025,7 @@ while True:
 				contents = repo.get_contents("test_setting.ini")
 				repo.update_file(contents.path, "test_setting", result_voiceCH, contents.sha)
 
-			await ctx.send('< 음성채널 [' + self.get_channel(voice_channel.id).name + '] 접속완료>', tts=False)
+			await ctx.send('< 음성채널 [' + client.get_channel(voice_channel.id).name + '] 접속완료>', tts=False)
 		else:
 			return
 
@@ -5129,7 +5141,7 @@ while True:
 			await data_list_Save("item_list.ini", "-----아이템목록-----", item_Data)
 			await voice_client1.disconnect()
 			#await FixedBossDateSave()
-			#await self.get_channel(channel).send('<보탐봇 재시작 중... 갑자기 인사해도 놀라지마세요!>', tts=False)
+			#await client.get_channel(channel).send('<보탐봇 재시작 중... 갑자기 인사해도 놀라지마세요!>', tts=False)
 			print("보탐봇강제재시작!")
 			await asyncio.sleep(2)
 
@@ -6784,7 +6796,7 @@ while True:
 		id = msg.author.id #id라는 변수에는 메시지를 보낸사람의 ID를 담습니다.
 		
 		if chflg == 1 :
-			if self.get_channel(basicSetting[7]).id == msg.channel.id:
+			if client.get_channel(basicSetting[7]).id == msg.channel.id:
 				channel = basicSetting[7]
 				message = msg
 
@@ -6844,7 +6856,7 @@ while True:
 								description= '```다음 ' + bossData[i][0] + ' ' + bossTimeString[i] + '입니다.```',
 								color=0xff0000
 								)
-						await self.get_channel(channel).send(embed=embed, tts=False)
+						await client.get_channel(channel).send(embed=embed, tts=False)
 
 					################ 보스 멍 처리 ################ 
 
@@ -6893,7 +6905,7 @@ while True:
 									description= '```다음 ' + bossData[i][0] + ' ' + bossTimeString[i] + '입니다.```',
 									color=0xff0000
 									)
-							await self.get_channel(channel).send(embed=embed, tts=False)
+							await client.get_channel(channel).send(embed=embed, tts=False)
 						else:
 							if tmp_bossTime[i] < tmp_now :
 
@@ -6912,9 +6924,9 @@ while True:
 										description= '```다음 ' + bossData[i][0] + ' ' + bossTimeString[i] + '입니다.```',
 										color=0xff0000
 										)
-								await self.get_channel(channel).send(embed=embed, tts=False)
+								await client.get_channel(channel).send(embed=embed, tts=False)
 							else:
-								await self.get_channel(channel).send('```' + bossData[i][0] + '탐이 아직 안됐습니다. 다음 ' + bossData[i][0] + '탐 [' + tmp_bossTimeString[i] + '] 입니다```', tts=False)
+								await client.get_channel(channel).send('```' + bossData[i][0] + '탐이 아직 안됐습니다. 다음 ' + bossData[i][0] + '탐 [' + tmp_bossTimeString[i] + '] 입니다```', tts=False)
 
 						
 				################ 예상 보스 타임 입력 ################ 
@@ -6958,9 +6970,9 @@ while True:
 									description= '```다음 ' + bossData[i][0] + ' ' + bossTimeString[i] + '입니다.```',
 									color=0xff0000
 									)
-							await self.get_channel(channel).send(embed=embed, tts=False)
+							await client.get_channel(channel).send(embed=embed, tts=False)
 						else:
-							await self.get_channel(channel).send('```' + bossData[i][0] +' 예상 시간을 입력해주세요.```', tts=False)
+							await client.get_channel(channel).send('```' + bossData[i][0] +' 예상 시간을 입력해주세요.```', tts=False)
 							
 					################ 보스타임 삭제 ################
 						
@@ -6975,7 +6987,7 @@ while True:
 						bossFlag0[i] = False
 						bossMungFlag[i] = False
 						bossMungCnt[i] = 0
-						await self.get_channel(channel).send('<' + bossData[i][0] + ' 삭제완료>', tts=False)
+						await client.get_channel(channel).send('<' + bossData[i][0] + ' 삭제완료>', tts=False)
 						await dbSave()
 						print ('<' + bossData[i][0] + ' 삭제완료>')
 					
@@ -6986,25 +6998,17 @@ while True:
 						tmp_msg = bossData[i][0] +'메모 '
 						
 						bossData[i][6] = hello[len(tmp_msg):]
-						await self.get_channel(channel).send('< ' + bossData[i][0] + ' [ ' + bossData[i][6] + ' ] 메모등록 완료>', tts=False)
+						await client.get_channel(channel).send('< ' + bossData[i][0] + ' [ ' + bossData[i][6] + ' ] 메모등록 완료>', tts=False)
 						
 					if message.content.startswith(bossData[i][0] +'메모삭제'):
 						
 						bossData[i][6] = ''
-						await self.get_channel(channel).send('< ' + bossData[i][0] + ' 메모삭제 완료>', tts=False)
+						await client.get_channel(channel).send('< ' + bossData[i][0] + ' 메모삭제 완료>', tts=False)
 
 		await client.process_commands(ori_msg)
 
 	client.loop.create_task(task())
-	ilsang_distribution_bot : IlsangDistributionBot = IlsangDistributionBot()
-	ilsang_distribution_bot.add_cog(settingCog(ilsang_distribution_bot))
-	ilsang_distribution_bot.add_cog(adminCog(ilsang_distribution_bot))
-	ilsang_distribution_bot.add_cog(memberCog(ilsang_distribution_bot))
-	ilsang_distribution_bot.add_cog(manageCog(ilsang_distribution_bot))
-	ilsang_distribution_bot.add_cog(bankCog(ilsang_distribution_bot))
-	
 	try:
-		ilsang_distribution_bot.run()
 		client.loop.run_until_complete(client.start(access_token))
 	except SystemExit:
 		handle_exit()
@@ -7017,3 +7021,12 @@ while True:
 	print("Bot restarting")
 	client = discord.Client(loop=client.loop)
 	client = commands.Bot(command_prefix="", help_command = None, description='일상디코봇')
+
+
+ilsang_distribution_bot : IlsangDistributionBot = IlsangDistributionBot()
+ilsang_distribution_bot.add_cog(settingCog(ilsang_distribution_bot))
+ilsang_distribution_bot.add_cog(adminCog(ilsang_distribution_bot))
+ilsang_distribution_bot.add_cog(memberCog(ilsang_distribution_bot))
+ilsang_distribution_bot.add_cog(manageCog(ilsang_distribution_bot))
+ilsang_distribution_bot.add_cog(bankCog(ilsang_distribution_bot))
+ilsang_distribution_bot.run()
