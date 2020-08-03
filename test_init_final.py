@@ -6998,22 +6998,14 @@ class bossCog(commands.Cog):
 
 		await client.process_commands(ori_msg)
 
-	client.loop.create_task(task())
-	ilsang_distribution_bot : IlsangDistributionBot = IlsangDistributionBot()
-	ilsang_distribution_bot.add_cog(settingCog(ilsang_distribution_bot))
-	ilsang_distribution_bot.add_cog(adminCog(ilsang_distribution_bot))
-	ilsang_distribution_bot.add_cog(memberCog(ilsang_distribution_bot))
-	ilsang_distribution_bot.add_cog(manageCog(ilsang_distribution_bot))
-	ilsang_distribution_bot.add_cog(bankCog(ilsang_distribution_bot))
-	ilsang_distribution_bot.add_cog(bossCog(ilsang_distribution_bot))
-	
-	try:
-		ilsang_distribution_bot.run()
-		client.loop.run_until_complete(client.start(access_token))
-	except SystemExit:
-		handle_exit()
-	except KeyboardInterrupt:
-		handle_exit()
+	#client.loop.create_task(task())
+
+	#try:
+	#	client.loop.run_until_complete(client.start(access_token))
+	#except SystemExit:
+	#	handle_exit()
+	#except KeyboardInterrupt:
+	#	handle_exit()
 	#client.loop.close()
 	#print("Program ended")
 	#break
@@ -7021,3 +7013,12 @@ class bossCog(commands.Cog):
 	print("Bot restarting")
 	client = discord.Client(loop=client.loop)
 	client = commands.Bot(command_prefix="", help_command = None, description='일상디코봇')
+
+ilsang_distribution_bot : IlsangDistributionBot = IlsangDistributionBot()
+ilsang_distribution_bot.add_cog(settingCog(ilsang_distribution_bot))
+ilsang_distribution_bot.add_cog(adminCog(ilsang_distribution_bot))
+ilsang_distribution_bot.add_cog(memberCog(ilsang_distribution_bot))
+ilsang_distribution_bot.add_cog(manageCog(ilsang_distribution_bot))
+ilsang_distribution_bot.add_cog(bankCog(ilsang_distribution_bot))
+ilsang_distribution_bot.add_cog(bossCog(ilsang_distribution_bot))
+ilsang_distribution_bot.run()
