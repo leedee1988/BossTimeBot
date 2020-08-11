@@ -6725,8 +6725,8 @@ while True:
 		resultTJ = random.randrange(1,9)
 		await PlaySound(voice_client1, './sound/TJ' + str(resultTJ) +'.mp3')
 
-		################ 페이백 계산기 ################ 
-	@commands.command(name=command[35][0], aliases=command[35][1:])
+	################ 페이백 계산기 ################ 
+	@client.command(name=command[35][0], aliases=command[35][1:])
 	async def payback_check(ctx, *, args : str = None):
 		if ctx.message.channel.id != basicSetting[7] or basicSetting[7] == "":
 			return
