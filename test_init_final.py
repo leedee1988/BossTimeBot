@@ -3908,7 +3908,7 @@ class IlsangDistributionBot(commands.AutoShardedBot):
 		print("Logged in as ") #화면에 봇의 아이디, 닉네임이 출력됩니다.
 		print(self.user.name)
 		print(self.user.id)
-		print("===========")
+		print("=========== test")
 
 		channel_name, channel_id, channel_voice_name, channel_voice_id = await get_guild_channel_info(self)
 
