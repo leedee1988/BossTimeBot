@@ -3980,6 +3980,7 @@ class IlsangDistributionBot(commands.AutoShardedBot):
 		await self.change_presence(status=discord.Status.online, activity=discord.Game(name=command[1][0], type=1), afk=False)
 
 	async def on_message(self, msg):
+        print('on_message')
 		await self.wait_until_ready()
 		if msg.author.bot: #만약 메시지를 보낸사람이 봇일 경우에는
 			return None #동작하지 않고 무시합니다.
