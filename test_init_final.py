@@ -1267,7 +1267,8 @@ class mainCog(commands.Cog):
 	def __init__(self, bot):
 		self.bot = bot
 
-	################ 보탐봇 입장 ################ 	
+	################ 보탐봇 입장 ################ 
+	@commands.has_permissions(manage_messages=True)
 	@commands.command(name=command[0][0], aliases=command[0][1:])
 	async def join_(self, ctx):
 		global basicSetting
